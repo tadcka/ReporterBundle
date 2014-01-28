@@ -17,7 +17,7 @@ use Tadcka\ReporterBundle\Model\TrackerInterface;
 use Tadcka\ReporterBundle\ModelManager\TrackerManager as BaseTrackerManager;
 
 /**
- * @author Tadas Gliaubicas <tadcka89@gmail.lt>
+ * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 1/28/14 11:35 PM
  */

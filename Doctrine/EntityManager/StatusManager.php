@@ -17,7 +17,7 @@ use Tadcka\ReporterBundle\Model\StatusInterface;
 use Tadcka\ReporterBundle\ModelManager\StatusManager as BaseStatusManager;
 
 /**
- * @author Tadas Gliaubicas <tadcka89@gmail.lt>
+ * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 1/28/14 11:34 PM
  */

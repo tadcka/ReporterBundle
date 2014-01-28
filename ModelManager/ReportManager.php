@@ -12,7 +12,7 @@
 namespace Tadcka\ReporterBundle\ModelManager;
 
 /**
- * @author Tadas Gliaubicas <tadcka89@gmail.lt>
+ * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 1/28/14 12:52 AM
  */
