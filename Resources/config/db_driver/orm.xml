@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+
+<!--
+ This file is part of the Tadcka package.
+
+ (c) Tadcka <tadcka89@gmail.com>
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+-->
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="tadcka_reporter.manager.report.default.class">Tadcka\ReporterBundle\Doctrine\EntityManager\ReportManager</parameter>
+        <parameter key="tadcka_reporter.manager.status.default.class">Tadcka\ReporterBundle\Doctrine\EntityManager\StatusManager</parameter>
+        <parameter key="tadcka_reporter.manager.tracker.default.class">Tadcka\ReporterBundle\Doctrine\EntityManager\TrackerManager</parameter>
+    </parameters>
+
+    <services>
+
+        <!--Report entity manager-->
+        <service id="tadcka_reporter.manager.report.default" class="%tadcka_reporter.manager.report.default.class%" public="false">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%tadcka_reporter.report_class%</argument>
+        </service>
+
+        <!--Status entity manager-->
+        <service id="tadcka_reporter.manager.status.default" class="%tadcka_reporter.manager.status.default.class%" public="false">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%tadcka_reporter.status_class%</argument>
+        </service>
+
+        <!--Tracker entity manager-->
+        <service id="tadcka_reporter.manager.tracker.default" class="%tadcka_reporter.manager.tracker.default.class%" public="false">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%tadcka_reporter.tracker_class%</argument>
+        </service>
+
+    </services>
+
+</container>

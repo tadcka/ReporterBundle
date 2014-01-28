@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the Tadcka package.
+ *
+ * (c) Tadcka <tadcka89@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Tadcka\ReporterBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -8,9 +17,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * Class TadckaReporterExtension
  *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+ * @package Tadcka\ReporterBundle\DependencyInjection
  */
 class TadckaReporterExtension extends Extension
 {
@@ -24,5 +33,14 @@ class TadckaReporterExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        if (!in_array(strtolower($config['db_driver']), array('mongodb', 'orm'))) {
+            throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
+        }
+        $loader->load('db_driver/' . sprintf('%s.xml', $config['db_driver']));
+
+        $container->setParameter('tadcka_reporter.report_class', $config['class']['model']['report']);
+        $container->setParameter('tadcka_reporter.status_class', $config['class']['model']['status']);
+        $container->setParameter('tadcka_reporter.tracker_class', $config['class']['model']['tracker']);
     }
 }
