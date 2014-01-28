@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ This file is part of the Tadcka package.
+
+ (c) Tadcka <tadcka89@gmail.com>
+
+ For the full copyright and license information, please view the LICENSE
+ file that was distributed with this source code.
+-->
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Tadcka\ReporterBundle\Model\StatusTranslation">
+
+        <!--<unique-constraints>-->
+            <!--<unique-constraint columns="status_id,lang" name="unique_lang_idx" />-->
+        <!--</unique-constraints>-->
+
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="lang" column="lang" type="string" length="31" nullable="false" />
+
+        <field name="title" column="title" type="string" length="255" nullable="false" />
+
+        <field name="description" column="description" type="text" nullable="true" />
+
+        <!--<many-to-one field="status" target-entity="Tadcka\ReporterBundle\Model\Status" inversed-by="translations">
+            <join-column name="status_id" referenced-column-name="id" on-delete="CASCADE" nullable="false"/>
+        </many-to-one>-->
+
+    </mapped-superclass>
+
+</doctrine-mapping>
