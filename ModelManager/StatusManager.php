@@ -16,7 +16,16 @@ namespace Tadcka\ReporterBundle\ModelManager;
  *
  * @since 1/28/14 12:52 AM
  */
-class StatusManager 
+abstract class StatusManager implements StatusManagerInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function createStatus()
+    {
+        $className = $this->getClass();
+        $status = new $className;
 
+        return $status;
+    }
 }

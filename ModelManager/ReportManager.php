@@ -16,7 +16,16 @@ namespace Tadcka\ReporterBundle\ModelManager;
  *
  * @since 1/28/14 12:52 AM
  */
-class ReportManager 
+abstract class ReportManager implements ReportManagerInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function createReport()
+    {
+        $className = $this->getClass();
+        $report = new $className;
 
+        return $report;
+    }
 }

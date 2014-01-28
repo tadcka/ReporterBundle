@@ -11,6 +11,8 @@
 
 namespace Tadcka\ReporterBundle\ModelManager;
 
+use Tadcka\ReporterBundle\Model\TrackerInterface;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.lt>
  *
@@ -18,5 +20,42 @@ namespace Tadcka\ReporterBundle\ModelManager;
  */
 interface TrackerManagerInterface
 {
+    /**
+     * Find tracker by id.
+     *
+     * @param int $id
+     *
+     * @return null|TrackerInterface
+     */
+    public function findTracker($id);
 
+    /**
+     * Create tracker.
+     *
+     * @return TrackerInterface
+     */
+    public function createTracker();
+
+    /**
+     * Save tracker.
+     *
+     * @param TrackerInterface $tracker
+     * @param bool $flush
+     */
+    public function saveTracker(TrackerInterface $tracker, $flush = false);
+
+    /**
+     * Delete tracker.
+     *
+     * @param TrackerInterface $tracker
+     * @param bool $flush
+     */
+    public function deleteTracker(TrackerInterface $tracker, $flush = false);
+
+    /**
+     * Get tracker class name.
+     *
+     * @return string
+     */
+    public function getClass();
 }

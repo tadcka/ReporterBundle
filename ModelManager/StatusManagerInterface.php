@@ -10,6 +10,8 @@
 
 namespace Tadcka\ReporterBundle\ModelManager;
 
+use Tadcka\ReporterBundle\Model\StatusInterface;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.lt>
  *
@@ -17,5 +19,42 @@ namespace Tadcka\ReporterBundle\ModelManager;
  */
 interface StatusManagerInterface 
 {
+    /**
+     * Find status by id.
+     *
+     * @param int $id
+     *
+     * @return null|StatusInterface
+     */
+    public function findStatus($id);
 
+    /**
+     * Create status.
+     *
+     * @return StatusInterface
+     */
+    public function createStatus();
+
+    /**
+     * Save status.
+     *
+     * @param StatusInterface $status
+     * @param bool $flush
+     */
+    public function saveStatus(StatusInterface $status, $flush = false);
+
+    /**
+     * Delete status.
+     *
+     * @param StatusInterface $status
+     * @param bool $flush
+     */
+    public function deleteStatus(StatusInterface $status, $flush = false);
+
+    /**
+     * Get status class name.
+     *
+     * @return string
+     */
+    public function getClass();
 }

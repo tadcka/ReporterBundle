@@ -16,7 +16,16 @@ namespace Tadcka\ReporterBundle\ModelManager;
  *
  * @since 1/28/14 12:53 AM
  */
-class TrackerManager 
+abstract class TrackerManager implements TrackerManagerInterface
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function createTracker()
+    {
+        $className = $this->getClass();
+        $tracker = new $className;
 
+        return $tracker;
+    }
 }
