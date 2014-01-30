@@ -33,14 +33,15 @@ class TadckaReporterExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+        $loader->load('form.xml');
 
         if (!in_array(strtolower($config['db_driver']), array('mongodb', 'orm'))) {
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
         $loader->load('db_driver/' . sprintf('%s.xml', $config['db_driver']));
 
-        $container->setParameter('tadcka_reporter.report_class', $config['class']['model']['report']);
-        $container->setParameter('tadcka_reporter.status_class', $config['class']['model']['status']);
-        $container->setParameter('tadcka_reporter.tracker_class', $config['class']['model']['tracker']);
+        $container->setParameter('tadcka_reporter.model.report_class', $config['class']['model']['report']);
+        $container->setParameter('tadcka_reporter.model.status_class', $config['class']['model']['status']);
+        $container->setParameter('tadcka_reporter.model.tracker_class', $config['class']['model']['tracker']);
     }
 }

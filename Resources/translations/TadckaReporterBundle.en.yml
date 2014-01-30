@@ -1,0 +1,9 @@
+tadcka_reporter_button: Reporter
+
+form:
+  label:
+    email: Email
+    title: Title
+    description: Description
+  button:
+    send: Send

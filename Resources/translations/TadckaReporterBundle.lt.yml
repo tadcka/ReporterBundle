@@ -1,0 +1,9 @@
+tadcka_reporter_button: Reporteris
+
+form:
+  label:
+    email: EL. paštas
+    title: Pavadinimas
+    description: Aprašymas
+  button:
+    send: Siųsti

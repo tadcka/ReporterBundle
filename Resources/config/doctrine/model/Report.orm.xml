@@ -32,15 +32,15 @@
 
         <field name="updatedAt" column="updated_at" type="datetime" nullable="false" />
 
-        <!--<many-to-one field="tracker" target-entity="Tadcka\ReporterBundle\Model\Status">
-            <join-column name="tracker_id" referenced-column-name="id" on-delete="CASCADE" nullable="false"/>
-        </many-to-one>-->
+        <!--<many-to-one field="tracker" target-entity="Tadcka\ReporterBundle\Model\Tracker">-->
+            <!--<join-column name="tracker_id" referenced-column-name="id" on-delete="CASCADE" nullable="false"/>-->
+        <!--</many-to-one>-->
 
         <!--<many-to-one field="status" target-entity="Tadcka\ReporterBundle\Model\Status">
             <join-column name="status_id" referenced-column-name="id" on-delete="CASCADE" nullable="false"/>
         </many-to-one>-->
 
-        <!--<one-to-many field="translations" target-entity="Tadcka\ReporterBundle\Model\Statusranslation" mapped-by="status">
+        <!--<one-to-many field="translations" target-entity="Tadcka\ReporterBundle\Model\StatusTranslation" mapped-by="status">
             <cascade>
                 <cascade-all/>
             </cascade>
