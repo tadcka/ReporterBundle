@@ -58,6 +58,7 @@ class TrackerController extends ContainerAware
 
     public function indexAction(Request $request, $page = 1)
     {
+        $page = $request->get('page', $page);
         $count = $this->getTrackerProvider()->getCount();
         $pagination = new Pagination($count, $page, 30);
         if ($page !== $pagination->getCurrentPage()) {
@@ -91,7 +92,9 @@ class TrackerController extends ContainerAware
         $formHandler = $this->getTrackerFormHandler();
 
         if (true === $formHandler->process($request, $form)) {
-            $formHandler->onSuccess();
+            $formHandler->onSuccess(
+                $this->getTranslator()->trans('tracker.add.success', array(), 'TadckaReporterBundle')
+            );
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_trackers'));
         }
@@ -127,7 +130,9 @@ class TrackerController extends ContainerAware
         $formHandler = $this->getTrackerFormHandler();
 
         if (true === $formHandler->process($request, $form)) {
-            $formHandler->onSuccess();
+            $formHandler->onSuccess(
+                $this->getTranslator()->trans('tracker.edit.success', array(), 'TadckaReporterBundle')
+            );
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_trackers'));
         }
@@ -151,9 +156,45 @@ class TrackerController extends ContainerAware
         );
     }
 
-    public function deleteAction(Request $request)
+    public function deleteAction(Request $request, $id)
     {
+        $tracker = $this->getTrackerProvider()->getTracker($id);
 
+        if (null === $tracker) {
+            throw new \LogicException('Not fount tracker!');
+        }
+
+        if (true === $request->isMethod('POST')) {
+            $this->getTrackerProvider()->deleteTracker($tracker);
+            $this->container->get('session')->getFlashBag()->set(
+                'flash_notices',
+                array(
+                    'success' => array(
+                        $this->getTranslator()->trans('tracker.delete.success', array(), 'TadckaTextBundle')
+                    )
+                )
+            );
+
+            return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_trackers'));
+        }
+
+        $title = $this->getTranslator()->trans('tracker.delete.title', array(), 'TadckaReporterBundle');
+
+        $breadcrumbs = new Breadcrumbs();
+        $breadcrumbs->add(
+            $this->getTranslator()->trans('tracker.list.title', array(), 'TadckaReporterBundle'),
+            $this->container->get('router')->generate('tadcka_reporter_trackers')
+        );
+        $breadcrumbs->add($title);
+
+        return $this->container->get('templating')->renderResponse(
+            'TadckaReporterBundle:Tracker/Action:delete.html.twig',
+            array(
+                'title' => $title,
+                'breadcrumbs' => $breadcrumbs,
+                'tracker' => $tracker,
+            )
+        );
     }
 }
  

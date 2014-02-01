@@ -6,12 +6,21 @@
 
     <parameters>
         <parameter key="tadcka_reporter.tracker_provider.class">Tadcka\ReporterBundle\Provider\TrackerProvider</parameter>
+        <parameter key="tadcka_reporter.status_provider.class">Tadcka\ReporterBundle\Provider\StatusProvider</parameter>
     </parameters>
 
     <services>
+
+        <!--Status provider-->
+        <service id="tadcka_reporter.status_provider" class="%tadcka_reporter.status_provider.class%">
+            <argument type="service" id="tadcka_reporter.manager.status.default" />
+        </service>
+
+        <!--Tracker provider-->
         <service id="tadcka_reporter.tracker_provider" class="%tadcka_reporter.tracker_provider.class%">
             <argument type="service" id="tadcka_reporter.manager.tracker.default" />
         </service>
+
     </services>
 
 </container>

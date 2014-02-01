@@ -11,45 +11,45 @@
 
 namespace Tadcka\ReporterBundle\Provider;
 
-use Tadcka\ReporterBundle\Model\TrackerInterface;
+use Tadcka\ReporterBundle\Model\StatusInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
- * @since 14.2.1 15.32
+ * @since 14.2.1 21.54
  */
-interface TrackerProviderInterface
+interface StatusProviderInterface
 {
     /**
-     * Get tracker.
+     * Get status.
      *
      * @param int $id
      *
-     * @return null|TrackerInterface
+     * @return null|StatusInterface
      */
-    public function getTracker($id);
+    public function getStatus($id);
 
     /**
-     * Get all tracker count.
+     * Get all status count.
      *
      * @return int
      */
     public function getCount();
 
     /**
-     * Get trackers.
+     * Get statuses.
      *
      * @param null|int $offset
      * @param null|int $limit
      *
-     * @return array|TrackerInterface[]
+     * @return array|StatusInterface[]
      */
-    public function getTrackers($offset = null, $limit = null);
+    public function getStatuses($offset = null, $limit = null);
 
     /**
-     * Delete tracker.
+     * Delete status.
      *
-     * @param TrackerInterface $tracker
+     * @param StatusInterface $status
      */
-    public function deleteTracker(TrackerInterface $tracker);
+    public function deleteStatus(StatusInterface $status);
 }

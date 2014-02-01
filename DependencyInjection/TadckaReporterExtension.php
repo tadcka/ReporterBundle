@@ -34,6 +34,7 @@ class TadckaReporterExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
         $loader->load('form/reporter.xml');
+        $loader->load('form/status.xml');
         $loader->load('form/tracker.xml');
 
         if (!in_array(strtolower($config['db_driver']), array('mongodb', 'orm'))) {

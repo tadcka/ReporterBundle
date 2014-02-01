@@ -13,6 +13,7 @@ namespace Tadcka\ReporterBundle\Doctrine\EntityManager;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use Tadcka\ReporterBundle\Model\StatusInterface;
 use Tadcka\ReporterBundle\ModelManager\StatusManager as BaseStatusManager;
 
@@ -57,6 +58,46 @@ class StatusManager extends BaseStatusManager
     public function findStatus($id)
     {
         return $this->repository->find($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCount()
+    {
+        $qb = $this->repository->createQueryBuilder('s');
+
+        $qb->select('COUNT(s)');
+
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return 0;
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStatuses($offset = null, $limit = null)
+    {
+        $qb = $this->repository->createQueryBuilder('s');
+
+        $qb->innerJoin('s.translations', 'trans');
+
+        if (null !== $offset) {
+            $qb->setFirstResult($offset);
+        }
+
+        if (null !== $limit) {
+            $qb->getMaxResults($limit);
+        }
+
+        $qb->select('s, trans');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

@@ -14,6 +14,7 @@ namespace Tadcka\ReporterBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -27,6 +28,26 @@ class StatusTranslationFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add(
+            'title',
+            'text',
+            array(
+                'label' => 'form.status.label.title',
+                'required' => false,
+                'constraints' => array(
+                    new NotBlank()
+                )
+            )
+        );
+
+        $builder->add(
+            'description',
+            'textarea',
+            array(
+                'label' => 'form.status.label.description',
+                'required' => false,
+            )
+        );
     }
 
     /**
@@ -34,6 +55,12 @@ class StatusTranslationFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setDefaults(
+            array(
+                'translation_domain' => 'TadckaReporterBundle',
+                'label' => false,
+            )
+        );
     }
 
     /**
@@ -41,6 +68,6 @@ class StatusTranslationFormType extends AbstractType
      */
     public function getName()
     {
-        return 'status_translation';
+        return 'tadcka_status_translation';
     }
 }

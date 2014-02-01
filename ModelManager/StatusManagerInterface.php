@@ -29,6 +29,23 @@ interface StatusManagerInterface
     public function findStatus($id);
 
     /**
+     * Get all status count.
+     *
+     * @return int
+     */
+    public function getCount();
+
+    /**
+     * Get statuses.
+     *
+     * @param null|int $offset
+     * @param null|int $limit
+     *
+     * @return array|StatusInterface[]
+     */
+    public function getStatuses($offset = null, $limit = null);
+
+    /**
      * Create status.
      *
      * @return StatusInterface

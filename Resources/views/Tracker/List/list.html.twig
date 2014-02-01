@@ -3,7 +3,7 @@
 {% trans_default_domain 'TadckaReporterBundle' %}
 
 {% block main_content %}
-    <a class="btn btn-primary" href="{{ url('tadcka_text_create') }}">{{ 'button.create_tracker'|trans }}</a>
+    <a class="btn btn-primary" href="{{ url('tadcka_reporter_tracker_add') }}">{{ 'button.add_tracker'|trans }}</a>
     <div class="row-fluid tadcka_reporter_tracker_container">
         {% include 'TadckaReporterBundle:Tracker/List:content.html.twig' with {trackers: trackers} %}
     </div>

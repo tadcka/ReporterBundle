@@ -27,6 +27,25 @@ class StatusFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add(
+            'translations',
+            'translations',
+            array(
+                'type' => new StatusTranslationFormType(),
+                'label' => false,
+                'options' => array(
+                    'data_class' => $options['translation_data_class']
+                )
+            )
+        );
+
+        $builder->add(
+            'submit',
+            'submit',
+            array(
+                'label' => 'form.button.save',
+            )
+        );
     }
 
     /**
@@ -34,6 +53,13 @@ class StatusFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setOptional(array('translation_data_class'));
+
+        $resolver->setDefaults(
+            array(
+                'translation_domain' => 'TadckaReporterBundle',
+            )
+        );
     }
 
     /**
@@ -41,6 +67,6 @@ class StatusFormType extends AbstractType
      */
     public function getName()
     {
-        return 'status';
+        return 'tadcka_status';
     }
 }

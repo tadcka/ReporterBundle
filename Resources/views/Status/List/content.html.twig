@@ -1,0 +1,25 @@
+{% trans_default_domain 'TadckaReporterBundle' %}
+
+{% block main_content %}
+    {% if pages is not empty %}
+        {{ pages|raw }}
+    {% endif %}
+
+    <table class="table">
+        <tr>
+            <th>Nr.</th>
+            <th>{{ 'title'|trans }}</th>
+            <th>{{ 'description'|trans }}</th>
+            <th>{{ 'action'|trans }}</th>
+        </tr>
+        {% for key, status in statuses %}
+            <tr>
+                {% include 'TadckaReporterBundle:Status/List:item.html.twig' with {status: status, number: (key + 1)} %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if pages is not empty %}
+        {{ pages|raw }}
+    {% endif %}
+{% endblock %}

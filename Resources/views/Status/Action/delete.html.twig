@@ -1,0 +1,13 @@
+{% extends 'TadckaReporterBundle::layout.html.twig' %}
+
+{% trans_default_domain 'TadckaReporterBundle' %}
+
+{% block main_content %}
+    <div class="row-fluid">
+        {{ 'status.delete.question'|trans({'%name%': status.getTranslation(app.request.locale).getTitle()}) }}
+        <form action="{{ url('tadcka_reporter_status_delete', {id: status.getId()}) }}" method="post">
+            <button type="submit" class="btn btn-danger">{{ 'button.delete'|trans }}</button>
+            <a class="btn" href="{{ url('tadcka_reporter_statuses') }}">{{ 'form.button.cancel'|trans }}</a>
+        </form>
+    </div>
+{% endblock %}

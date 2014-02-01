@@ -7,6 +7,7 @@
     <route id="tadcka_reporter_trackers" pattern="/reporter/trackers/{page}">
         <default key="page">1</default>
         <default key="_controller">TadckaReporterBundle:Tracker:index</default>
+        <requirement key="page">\d+</requirement>
     </route>
 
     <route id="tadcka_reporter_tracker_add" pattern="/reporter/tracker/add">
@@ -15,10 +16,12 @@
 
     <route id="tadcka_reporter_tracker_edit" pattern="/reporter/tracker/edit/{id}">
         <default key="_controller">TadckaReporterBundle:Tracker:edit</default>
+        <requirement key="id">\d+</requirement>
     </route>
 
     <route id="tadcka_reporter_tracker_delete" pattern="/reporter/tracker/delete/{id}">
         <default key="_controller">TadckaReporterBundle:Tracker:delete</default>
+        <requirement key="id">\d+</requirement>
     </route>
 
 </routes>

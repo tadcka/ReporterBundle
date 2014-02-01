@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="tadcka_reporter_statuses" pattern="/reporter/statuses/{page}">
+        <default key="page">1</default>
+        <default key="_controller">TadckaReporterBundle:Status:index</default>
+        <requirement key="page">\d+</requirement>
+    </route>
+
+    <route id="tadcka_reporter_status_add" pattern="/reporter/status/add">
+        <default key="_controller">TadckaReporterBundle:Status:add</default>
+    </route>
+
+    <route id="tadcka_reporter_status_edit" pattern="/reporter/status/edit/{id}">
+        <default key="_controller">TadckaReporterBundle:Status:edit</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+    <route id="tadcka_reporter_status_delete" pattern="/reporter/status/delete/{id}">
+        <default key="_controller">TadckaReporterBundle:Status:delete</default>
+        <requirement key="id">\d+</requirement>
+    </route>
+
+</routes>

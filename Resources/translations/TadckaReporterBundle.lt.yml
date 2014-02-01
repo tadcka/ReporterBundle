@@ -10,15 +10,41 @@ form:
     save: Išsaugoti
     cancel: Atšaukti
   tracker:
-      label:
-        title: Pavadinimas
-        description: Aprašymas
+    label:
+      title: Pavadinimas
+      description: Aprašymas
+  status:
+    label:
+      title: Pavadinimas
+      description: Aprašymas
 
 tracker:
   list:
     title: Žymenų sąrašas
   add:
     title: Pridėti naują žymenį
+    success: Sėkmingai pridėjote žymenį!
+  edit:
+    title: Redagavimas žymenio
+    success: Sėkmingai redagavote žymenį!
+  delete:
+    title: Trinimas žymenio
+    question: Ar tikrai norite trinti žymenį: %name%?
+    success: Sėkmingai ištrynėte žymenį!
+
+status:
+  list:
+    title: Būsenų sąrašas
+  add:
+    title: Pridėti naują būseną
+    success: Sėkmingai pridėjote būseną!
+  edit:
+    title: Redagavimas būsenos
+    success: Sėkmingai redagavote būseną!
+  delete:
+    title: Trinimas būsenos
+    question: Ar tikrai norite trinti būseną: %name%?
+    success: Sėkmingai ištrynėte būseną!
 
 title: Pavadinimas
 description: Aprašymas
@@ -27,3 +53,5 @@ action: Veiksmai
 button:
   edit: Redaguoti
   delete: Trinti
+  add_tracker: Pridėti žymenį
+  add_status: Pridėti būseną

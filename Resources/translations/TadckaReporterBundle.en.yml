@@ -13,12 +13,38 @@ form:
     label:
       title: Title
       description: Description
+  status:
+    label:
+      title: Title
+      description: Description
 
 tracker:
   list:
     title: Tracker list
   add:
     title: Add new tracker
+    success: You've successfully added tracker!
+  edit:
+    title: Editing tracker
+    success: Edited successfully tracker!
+  delete:
+    title: Delete tracker
+    question: Are you sure you want to delete tracker: %name%?
+    success: Successfully deleted tracker!
+
+status:
+  list:
+    title: Status list
+  add:
+    title: Add new status
+    success: You've successfully added status!
+  edit:
+    title: Editing status
+    success: Edited successfully status!
+  delete:
+    title: Delete status
+    question: Are you sure you want to delete status: %name%?
+    success: Successfully deleted status!
 
 title: Title
 description: Description
@@ -27,3 +53,5 @@ action: Action
 button:
   edit: Edit
   delete: Delete
+  add_tracker: Add tracker
+  add_status: Add status

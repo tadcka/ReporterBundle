@@ -11,6 +11,7 @@
 
 namespace Tadcka\ReporterBundle\Provider;
 
+use Tadcka\ReporterBundle\Model\TrackerInterface;
 use Tadcka\ReporterBundle\ModelManager\TrackerManagerInterface;
 
 /**
@@ -58,5 +59,13 @@ class TrackerProvider implements TrackerProviderInterface
     public function getTrackers($offset = null, $limit = null)
     {
         return $this->trackerManager->getTrackers($offset, $limit);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function deleteTracker(TrackerInterface $tracker)
+    {
+        $this->trackerManager->deleteTracker($tracker, true);
     }
 }

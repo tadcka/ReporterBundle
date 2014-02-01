@@ -10,6 +10,7 @@
  */
 
 namespace Tadcka\ReporterBundle\Form\Factory;
+
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -25,8 +26,8 @@ use Tadcka\ReporterBundle\ModelManager\TrackerManagerInterface;
 class TrackerFormFactory 
 {
     /**
-     * @var FormFactoryInterface
-     */
+ * @var FormFactoryInterface
+ */
     private $formFactory;
 
     /**
@@ -54,8 +55,12 @@ class TrackerFormFactory
      *
      * @internal param string $dataClass
      */
-    public function __construct(FormFactoryInterface $formFactory, RouterInterface $router, TrackerManagerInterface $trackerManager, $translationDataClass)
-    {
+    public function __construct(
+        FormFactoryInterface $formFactory,
+        RouterInterface $router,
+        TrackerManagerInterface $trackerManager,
+        $translationDataClass
+    ) {
         $this->trackerManager = $trackerManager;
         $this->formFactory = $formFactory;
         $this->translationDataClass = $translationDataClass;
@@ -75,11 +80,14 @@ class TrackerFormFactory
             $data = $this->trackerManager->createTracker();
         }
 
-        return $this->formFactory->create(new TrackerFormType(), $data, array(
-            'data_class' => $this->trackerManager->getClass(),
-            'translation_data_class' => $this->translationDataClass,
-            'action' => $this->router->getContext()->getPathInfo(),
-        ));
+        return $this->formFactory->create(
+            new TrackerFormType(),
+            $data,
+            array(
+                'data_class' => $this->trackerManager->getClass(),
+                'translation_data_class' => $this->translationDataClass,
+                'action' => $this->router->getContext()->getPathInfo(),
+            )
+        );
     }
 }
- 
