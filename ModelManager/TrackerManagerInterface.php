@@ -30,6 +30,15 @@ interface TrackerManagerInterface
     public function findTracker($id);
 
     /**
+     * Get tracker choices.
+     *
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function getTrackerChoices($locale);
+
+    /**
      * Get all tracker count.
      *
      * @return int

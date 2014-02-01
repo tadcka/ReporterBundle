@@ -6,21 +6,22 @@
 
 
     <parameters>
-        <parameter key="tadcka_reporter.form_factory.report.class">Tadcka\ReporterBundle\Form\Factory\ReportFormFactory</parameter>
-        <parameter key="tadcka_reporter.form_handler.report.class">Tadcka\ReporterBundle\Form\Handler\ReportFormHandler</parameter>
+        <parameter key="tadcka_reporter.form_factory.reporter.class">Tadcka\ReporterBundle\Form\Factory\ReporterFormFactory</parameter>
+        <parameter key="tadcka_reporter.form_handler.reporter.class">Tadcka\ReporterBundle\Form\Handler\ReporterFormHandler</parameter>
     </parameters>
 
     <services>
 
         <!--Report form factory-->
-        <service id="tadcka_reporter.form_factory.report" class="%tadcka_reporter.form_factory.report.class%">
+        <service id="tadcka_reporter.form_factory.reporter" class="%tadcka_reporter.form_factory.reporter.class%">
             <argument type="service" id="form.factory" />
             <argument type="service" id="router" />
+            <argument type="service" id="tadcka_reporter.tracker_provider" />
             <argument>%tadcka_reporter.model.report_class%</argument>
         </service>
 
         <!--Report form handler-->
-        <service id="tadcka_reporter.form_handler.report" class="%tadcka_reporter.form_handler.report.class%">
+        <service id="tadcka_reporter.form_handler.reporter" class="%tadcka_reporter.form_handler.reporter.class%">
             <argument type="service" id="tadcka_reporter.manager.report.default" />
         </service>
 

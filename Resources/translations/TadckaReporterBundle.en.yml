@@ -1,10 +1,12 @@
 tadcka_reporter_button: Reporter
 
 form:
-  label:
-    email: Email
-    title: Title
-    description: Description
+  reporter:
+    label:
+      email: Email
+      title: Title
+      description: Description
+      tracker: Tracker
   button:
     send: Send
     save: Save
@@ -17,6 +19,8 @@ form:
     label:
       title: Title
       description: Description
+    tracker_choice:
+        empty_value: Select
 
 tracker:
   list:

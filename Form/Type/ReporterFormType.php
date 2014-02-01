@@ -16,14 +16,31 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 1/30/14 10:10 PM
  */
-class ReportFormType extends AbstractType
+class ReporterFormType extends AbstractType
 {
+    /**
+     * @var TrackerProviderInterface
+     */
+    private $trackerProvider;
+
+    /**
+     * Constructor.
+     *
+     * @param TrackerProviderInterface $trackerProvider
+     */
+    public function __construct(TrackerProviderInterface $trackerProvider)
+    {
+        $this->trackerProvider = $trackerProvider;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -33,8 +50,18 @@ class ReportFormType extends AbstractType
             'reporterEmail',
             'email',
             array(
-                'label' => 'form.label.email',
+                'label' => 'form.reporter.label.email',
                 'constraints' => array(new NotBlank(), new Email())
+            )
+        );
+
+        $builder->add(
+            'tracker',
+            new TrackerChoiceFormType($this->trackerProvider),
+            array(
+                'label' => 'form.reporter.label.tracker',
+                'constraints' => array(new NotNull()),
+                'choices' => $this->trackerProvider->getChoices($options['locale'])
             )
         );
 
@@ -42,7 +69,7 @@ class ReportFormType extends AbstractType
             'title',
             'text',
             array(
-                'label' => 'form.label.title',
+                'label' => 'form.reporter.label.title',
                 'constraints' => array(new NotBlank())
             )
         );
@@ -51,7 +78,7 @@ class ReportFormType extends AbstractType
             'description',
             'textarea',
             array(
-                'label' => 'form.label.description',
+                'label' => 'form.reporter.label.description',
                 'constraints' => array(new NotBlank())
             )
         );
@@ -71,6 +98,8 @@ class ReportFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setOptional(array('locale'));
+
         $resolver->setDefaults(
             array(
                 'translation_domain' => 'TadckaReporterBundle',
@@ -83,7 +112,7 @@ class ReportFormType extends AbstractType
      */
     public function getName()
     {
-        return 'report';
+        return 'tadcka_reporter';
     }
 }
  

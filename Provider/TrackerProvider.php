@@ -48,6 +48,21 @@ class TrackerProvider implements TrackerProviderInterface
     /**
      * {@inheritdoc}
      */
+    public function getChoices($locale)
+    {
+        $results = $this->trackerManager->getTrackerChoices($locale);
+
+        $data = array();
+        foreach ($results as $row) {
+            $data[$row['id']] = $row['title'];
+        }
+
+        return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCount()
     {
         return $this->trackerManager->getCount();

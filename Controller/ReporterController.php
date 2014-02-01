@@ -23,9 +23,9 @@ class ReporterController extends ContainerAware
 {
     public function indexAction(Request $request)
     {
-        $form = $this->container->get('tadcka_reporter.form_factory.report')->create();
+        $form = $this->container->get('tadcka_reporter.form_factory.reporter')->create($request->getLocale());
 
-        $formHandler= $this->container->get('tadcka_reporter.form_handler.report');
+        $formHandler= $this->container->get('tadcka_reporter.form_handler.reporter');
 
         if (true === $formHandler->process($request, $form)) {
 

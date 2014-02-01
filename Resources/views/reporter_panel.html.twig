@@ -54,14 +54,14 @@
 
             init: function () {
                 $('div.tadcka-reporter-panel').css('height', tadckaReporterLink.containerHeight + 'px');
-
+                var $container = $('div.tadcka-reporter-form');
                 $('a.tadcka-reporter-link').click(function (event) {
                     if ($('.tadcka-reporter-panel').hasClass('open')) {
+                        $container.html('');
                         $('.tadcka-reporter-panel')
                                 .animate({left: '-' + tadckaReporterLink.containerWidth}, tadckaReporterLink.speed)
                                 .removeClass('open');
                     } else {
-                        var $container = $('div.tadcka-reporter-form');
                         $container.fadeTo(300, 0.4);
                         var $url = $(this).attr('href');
                         $.ajax({
@@ -117,7 +117,7 @@
 
 <div class="tadcka-reporter-panel">
     {% set tadcka_reporter_button = 'tadcka_reporter_button'|trans({}, 'TadckaReporterBundle') %}
-    <a class="tadcka-reporter-link" href="{{ url('tadcka_report') }}">
+    <a class="tadcka-reporter-link" href="{{ url('tadcka_reporter') }}">
         {% for char in (tadcka_reporter_button)|split('') %}
             {{ char }}<br>
         {% endfor %}

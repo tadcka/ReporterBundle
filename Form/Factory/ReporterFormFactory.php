@@ -14,15 +14,16 @@ namespace Tadcka\ReporterBundle\Form\Factory;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Tadcka\ReporterBundle\Form\Type\ReportFormType;
+use Tadcka\ReporterBundle\Form\Type\ReporterFormType;
 use Tadcka\ReporterBundle\Model\ReportInterface;
+use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 1/30/14 10:17 PM
  */
-class ReportFormFactory
+class ReporterFormFactory
 {
     /**
      * @var FormFactoryInterface
@@ -35,6 +36,11 @@ class ReportFormFactory
     private $router;
 
     /**
+     * @var TrackerProviderInterface
+     */
+    private $trackerProvider;
+
+    /**
      * @var string
      */
     private $dataClass;
@@ -44,31 +50,39 @@ class ReportFormFactory
      *
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
+     * @param TrackerProviderInterface $trackerProvider
      * @param string $dataClass
      */
-    public function __construct(FormFactoryInterface $formFactory, RouterInterface $router, $dataClass)
-    {
+    public function __construct(
+        FormFactoryInterface $formFactory,
+        RouterInterface $router,
+        TrackerProviderInterface $trackerProvider,
+        $dataClass
+    ) {
         $this->formFactory = $formFactory;
         $this->router = $router;
         $this->dataClass = $dataClass;
+        $this->trackerProvider = $trackerProvider;
     }
 
     /**
      * Create report form.
      *
+     * @param string $locale
      * @param null|ReportInterface $data
      *
      * @return FormInterface
      */
-    public function create($data = null)
+    public function create($locale, $data = null)
     {
         return $this->formFactory->create(
-            new ReportFormType(),
+            new ReporterFormType($this->trackerProvider),
             $data,
             array(
                 'data_class' => $this->dataClass,
-                'action' => $this->router->generate('tadcka_report'),
-                'attr' => array('class' => 'tadcka-reporter-form')
+                'action' => $this->router->generate('tadcka_reporter'),
+                'attr' => array('class' => 'tadcka-reporter-form'),
+                'locale' => $locale,
             )
         );
     }

@@ -20,7 +20,7 @@ use Tadcka\ReporterBundle\ModelManager\ReportManagerInterface;
  *
  * @since 1/30/14 10:15 PM
  */
-class ReportFormHandler
+class ReporterFormHandler
 {
     /**
      * @var ReportManagerInterface

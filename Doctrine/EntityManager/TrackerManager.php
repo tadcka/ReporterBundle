@@ -14,6 +14,7 @@ namespace Tadcka\ReporterBundle\Doctrine\EntityManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query\Expr\Join;
 use Tadcka\ReporterBundle\Model\TrackerInterface;
 use Tadcka\ReporterBundle\ModelManager\TrackerManager as BaseTrackerManager;
 
@@ -58,6 +59,21 @@ class TrackerManager extends BaseTrackerManager
     public function findTracker($id)
     {
         return $this->repository->find($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTrackerChoices($locale)
+    {
+        $qb = $this->repository->createQueryBuilder('t');
+
+        $qb->innerJoin('t.translations', 'trans', Join::WITH, $qb->expr()->eq('trans.lang', ':locale'))
+            ->setParameter('locale', $locale);
+
+        $qb->select('t.id, trans.title');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

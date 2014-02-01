@@ -30,6 +30,15 @@ interface TrackerProviderInterface
     public function getTracker($id);
 
     /**
+     * Get choices.
+     *
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function getChoices($locale);
+
+    /**
      * Get all tracker count.
      *
      * @return int
