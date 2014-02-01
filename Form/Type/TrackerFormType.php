@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
- * @since 1/30/14 11:46 PM
+ * @since  1/30/14 11:46 PM
  */
 class TrackerFormType extends AbstractType
 {
@@ -27,6 +27,25 @@ class TrackerFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add(
+            'translations',
+            'translations',
+            array(
+                'type' => new TrackerTranslationFormType(),
+                'label' => false,
+                'options' => array(
+                    'data_class' => $options['translation_data_class']
+                )
+            )
+        );
+
+        $builder->add(
+            'submit',
+            'submit',
+            array(
+                'label' => 'form.button.save',
+            )
+        );
     }
 
     /**
@@ -34,6 +53,13 @@ class TrackerFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $resolver->setOptional(array('translation_data_class'));
+
+        $resolver->setDefaults(
+            array(
+                'translation_domain' => 'TadckaReporterBundle',
+            )
+        );
     }
 
     /**

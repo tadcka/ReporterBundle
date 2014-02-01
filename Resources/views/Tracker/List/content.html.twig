@@ -1,0 +1,25 @@
+{% trans_default_domain 'TadckaReporterBundle' %}
+
+{% block main_content %}
+    {% if pages is not empty %}
+        {{ pages|raw }}
+    {% endif %}
+
+    <table class="table">
+        <tr>
+            <th>Nr.</th>
+            <th>{{ 'title'|trans }}</th>
+            <th>{{ 'desription'|trans }}</th>
+            <th>{{ 'action'|trans }}</th>
+        </tr>
+        {% for key, tracker in trackers %}
+            <tr>
+                {% include 'TadckaReporterBundle:Tracker/List:item.html.twig' with {tracker: tracker, number: (key + 1)} %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if pages is not empty %}
+        {{ pages|raw }}
+    {% endif %}
+{% endblock %}

@@ -4,17 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="tadcka_reporter.example.class">Tadcka\ReporterBundle\Example</parameter>
+        <parameter key="tadcka_reporter.tracker_provider.class">Tadcka\ReporterBundle\Provider\TrackerProvider</parameter>
     </parameters>
 
     <services>
-        <service id="tadcka_reporter.example" class="%tadcka_reporter.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="tadcka_reporter.tracker_provider" class="%tadcka_reporter.tracker_provider.class%">
+            <argument type="service" id="tadcka_reporter.manager.tracker.default" />
         </service>
     </services>
-    -->
+
 </container>

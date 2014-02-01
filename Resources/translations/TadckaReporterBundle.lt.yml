@@ -7,3 +7,23 @@ form:
     description: Aprašymas
   button:
     send: Siųsti
+    save: Išsaugoti
+    cancel: Atšaukti
+  tracker:
+      label:
+        title: Pavadinimas
+        description: Aprašymas
+
+tracker:
+  list:
+    title: Žymenų sąrašas
+  add:
+    title: Pridėti naują žymenį
+
+title: Pavadinimas
+description: Aprašymas
+action: Veiksmai
+
+button:
+  edit: Redaguoti
+  delete: Trinti

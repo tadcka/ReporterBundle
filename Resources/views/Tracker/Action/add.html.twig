@@ -1,0 +1,7 @@
+{% extends 'TadckaReporterBundle::layout.html.twig' %}
+
+{% block main_content %}
+    <div class="row-fluid">
+        {% include 'TadckaReporterBundle:Tracker/Form:tracker.html.twig' with {form: form} %}
+    </div>
+{% endblock %}

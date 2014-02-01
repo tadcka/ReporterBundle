@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="tadcka_reporter_trackers" pattern="/reporter/trackers/{page}">
+        <default key="page">1</default>
+        <default key="_controller">TadckaReporterBundle:Tracker:index</default>
+    </route>
+
+    <route id="tadcka_reporter_tracker_add" pattern="/reporter/tracker/add">
+        <default key="_controller">TadckaReporterBundle:Tracker:add</default>
+    </route>
+
+    <route id="tadcka_reporter_tracker_edit" pattern="/reporter/tracker/edit/{id}">
+        <default key="_controller">TadckaReporterBundle:Tracker:edit</default>
+    </route>
+
+    <route id="tadcka_reporter_tracker_delete" pattern="/reporter/tracker/delete/{id}">
+        <default key="_controller">TadckaReporterBundle:Tracker:delete</default>
+    </route>
+
+</routes>

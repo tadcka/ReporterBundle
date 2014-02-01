@@ -13,6 +13,7 @@ namespace Tadcka\ReporterBundle\Doctrine\EntityManager;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use Tadcka\ReporterBundle\Model\TrackerInterface;
 use Tadcka\ReporterBundle\ModelManager\TrackerManager as BaseTrackerManager;
 
@@ -57,6 +58,46 @@ class TrackerManager extends BaseTrackerManager
     public function findTracker($id)
     {
         return $this->repository->find($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCount()
+    {
+        $qb = $this->repository->createQueryBuilder('t');
+
+        $qb->select('COUNT(t)');
+
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return 0;
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTrackers($offset = null, $limit = null)
+    {
+        $qb = $this->repository->createQueryBuilder('t');
+
+        $qb->innerJoin('t.translations', 'trans');
+
+        if (null !== $offset) {
+            $qb->setFirstResult($offset);
+        }
+
+        if (null !== $limit) {
+            $qb->getMaxResults($limit);
+        }
+
+        $qb->select('t, trans');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

@@ -9,18 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Tadcka\ReporterBundle\Form\Handler;
+namespace Tadcka\ReporterBundle\Provider;
 
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Tadcka\ReporterBundle\ModelManager\TrackerManagerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
- * @since 1/30/14 11:50 PM
+ * @since 14.2.1 15.31
  */
-class TrackerFormHandler 
+class TrackerProvider implements TrackerProviderInterface
 {
     /**
      * @var TrackerManagerInterface
@@ -37,31 +35,28 @@ class TrackerFormHandler
         $this->trackerManager = $trackerManager;
     }
 
+
     /**
-     * Form handler process.
-     *
-     * @param Request $request
-     * @param FormInterface $form
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function process(Request $request, FormInterface $form)
+    public function getTracker($id)
     {
-        if (true === $request->isMethod('POST')) {
-            $form->submit($request);
-            if (true === $form->isValid()) {
-                $this->trackerManager->saveTracker($form->getData(), true);
-
-                return true;
-            }
-        }
-
-        return false;
+        return $this->trackerManager->findTracker($id);
     }
 
-    public function onSuccess()
+    /**
+     * {@inheritdoc}
+     */
+    public function getCount()
     {
+        return $this->trackerManager->getCount();
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getTrackers($offset = null, $limit = null)
+    {
+        return $this->trackerManager->getTrackers($offset, $limit);
     }
 }
- 

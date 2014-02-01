@@ -30,6 +30,23 @@ interface TrackerManagerInterface
     public function findTracker($id);
 
     /**
+     * Get all tracker count.
+     *
+     * @return int
+     */
+    public function getCount();
+
+    /**
+     * Get trackers.
+     *
+     * @param null|int $offset
+     * @param null|int $limit
+     *
+     * @return array|TrackerInterface[]
+     */
+    public function getTrackers($offset = null, $limit = null);
+
+    /**
      * Create tracker.
      *
      * @return TrackerInterface

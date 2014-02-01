@@ -26,7 +26,7 @@ class StatusController extends ContainerAware
 
     }
 
-    public function createTAction(Request $request)
+    public function createAction(Request $request)
     {
 
     }

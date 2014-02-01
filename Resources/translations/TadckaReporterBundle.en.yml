@@ -7,3 +7,23 @@ form:
     description: Description
   button:
     send: Send
+    save: Save
+    cancel: Cancel
+  tracker:
+    label:
+      title: Title
+      description: Description
+
+tracker:
+  list:
+    title: Tracker list
+  add:
+    title: Add new tracker
+
+title: Title
+description: Description
+action: Action
+
+button:
+  edit: Edit
+  delete: Delete
