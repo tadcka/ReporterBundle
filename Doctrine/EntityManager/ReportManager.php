@@ -13,6 +13,7 @@ namespace Tadcka\ReporterBundle\Doctrine\EntityManager;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use Tadcka\ReporterBundle\Model\ReportInterface;
 use Tadcka\ReporterBundle\ModelManager\ReportManager as BaseReportManager;
 
@@ -70,6 +71,44 @@ class ReportManager extends BaseReportManager
     /**
      * {@inheritdoc}
      */
+    public function getAllCount()
+    {
+        $qb = $this->repository->createQueryBuilder('r');
+
+        $qb->select('COUNT(r)');
+
+        try {
+            return $qb->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            return 0;
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getReports($offset = null, $limit = null)
+    {
+        $qb = $this->repository->createQueryBuilder('r');
+
+        if (null !== $offset) {
+            $qb->setFirstResult($offset);
+        }
+
+        if (null !== $limit) {
+            $qb->getMaxResults($limit);
+        }
+
+        $qb->select('r');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function saveReport(ReportInterface $report, $flush = false)
     {
         $this->em->persist($report);
@@ -99,4 +138,3 @@ class ReportManager extends BaseReportManager
         return $this->class;
     }
 }
- 

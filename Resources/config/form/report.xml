@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <parameters>
+        <parameter key="tadcka_reporter.form_factory.report.class">Tadcka\ReporterBundle\Form\Factory\ReportFormFactory</parameter>
+        <parameter key="tadcka_reporter.form_handler.report.class">Tadcka\ReporterBundle\Form\Handler\ReportFormHandler</parameter>
+    </parameters>
+
+    <services>
+
+        <!--Report form factory-->
+        <service id="tadcka_reporter.form_factory.report" class="%tadcka_reporter.form_factory.report.class%">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="router" />
+            <argument type="service" id="tadcka_reporter.tracker_provider" />
+            <argument type="service" id="tadcka_reporter.status_provider" />
+            <argument>%tadcka_reporter.model.report_class%</argument>
+        </service>
+
+        <!--Report form handler-->
+        <service id="tadcka_reporter.form_handler.report" class="%tadcka_reporter.form_handler.report.class%">
+            <argument type="service" id="tadcka_reporter.manager.report.default" />
+            <argument type="service" id="session" />
+        </service>
+
+    </services>
+
+</container>

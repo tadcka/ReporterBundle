@@ -30,6 +30,15 @@ interface StatusProviderInterface
     public function getStatus($id);
 
     /**
+     * Get choices.
+     *
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function getChoices($locale);
+
+    /**
      * Get all status count.
      *
      * @return int

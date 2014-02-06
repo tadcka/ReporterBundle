@@ -5,11 +5,17 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="tadcka_reporter.report_provider.class">Tadcka\ReporterBundle\Provider\ReportProvider</parameter>
         <parameter key="tadcka_reporter.tracker_provider.class">Tadcka\ReporterBundle\Provider\TrackerProvider</parameter>
         <parameter key="tadcka_reporter.status_provider.class">Tadcka\ReporterBundle\Provider\StatusProvider</parameter>
     </parameters>
 
     <services>
+
+        <!--Report provider-->
+        <service id="tadcka_reporter.report_provider" class="%tadcka_reporter.report_provider.class%">
+            <argument type="service" id="tadcka_reporter.manager.report.default" />
+        </service>
 
         <!--Status provider-->
         <service id="tadcka_reporter.status_provider" class="%tadcka_reporter.status_provider.class%">

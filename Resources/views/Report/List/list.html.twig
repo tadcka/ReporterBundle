@@ -1,0 +1,9 @@
+{% extends 'TadckaReporterBundle::layout.html.twig' %}
+
+{% trans_default_domain 'TadckaReporterBundle' %}
+
+{% block main_content %}
+    <div class="row-fluid tadcka_reporter_report_container">
+        {% include 'TadckaReporterBundle:Report/List:content.html.twig' with {reports: reports, pages: pages} %}
+    </div>
+{% endblock %}

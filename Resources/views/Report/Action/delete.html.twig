@@ -1,0 +1,13 @@
+{% extends 'TadckaReporterBundle::layout.html.twig' %}
+
+{% trans_default_domain 'TadckaReporterBundle' %}
+
+{% block main_content %}
+    <div class="row-fluid">
+        {{ 'report.delete.question'|trans }}
+        <form action="{{ url('tadcka_reporter_report_delete', {id: report.getId()}) }}" method="post">
+            <button type="submit" class="btn btn-danger">{{ 'button.delete'|trans }}</button>
+            <a class="btn" href="{{ url('tadcka_reporter_reports') }}">{{ 'form.button.cancel'|trans }}</a>
+        </form>
+    </div>
+{% endblock %}

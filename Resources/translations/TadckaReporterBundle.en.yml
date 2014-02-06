@@ -15,12 +15,18 @@ form:
     label:
       title: Title
       description: Description
+  report:
+    label:
+      tracker: Tracker
+      status: Status
   status:
     label:
       title: Title
       description: Description
-    tracker_choice:
-        empty_value: Select
+  tracker_choice:
+    empty_value: Select
+  status_choice:
+    empty_value: Select
 
 tracker:
   list:
@@ -50,12 +56,30 @@ status:
     question: Are you sure you want to delete status: %name%?
     success: Successfully deleted status!
 
+report:
+  list:
+    title: Reports
+  update:
+    title: Report update
+    success: Successfully updated report!
+  delete:
+    title: Delete report
+    question: Are you sure you want to delete the report?
+    success: Successfully deleted the report!
+
+reporter:
+  success: Post successfully registered!
+
 title: Title
 description: Description
 action: Action
+reporter_email: Reporter email
+tracker: Tracker
+status: Status
 
 button:
   edit: Edit
   delete: Delete
   add_tracker: Add tracker
   add_status: Add status
+  update: Update

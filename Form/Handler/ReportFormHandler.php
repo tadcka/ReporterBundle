@@ -13,15 +13,15 @@ namespace Tadcka\ReporterBundle\Form\Handler;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Tadcka\ReporterBundle\Model\ReportInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Tadcka\ReporterBundle\ModelManager\ReportManagerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
- * @since 1/30/14 10:15 PM
+ * @since 2/6/14 11:45 PM
  */
-class ReporterFormHandler
+class ReportFormHandler
 {
     /**
      * @var ReportManagerInterface
@@ -29,17 +29,24 @@ class ReporterFormHandler
     private $reportManager;
 
     /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
      * Constructor.
      *
      * @param ReportManagerInterface $reportManager
+     * @param SessionInterface $session
      */
-    public function __construct(ReportManagerInterface $reportManager)
+    public function __construct(ReportManagerInterface $reportManager, SessionInterface $session)
     {
         $this->reportManager = $reportManager;
+        $this->session = $session;
     }
 
     /**
-     * Process.
+     * Form handler process.
      *
      * @param Request $request
      * @param FormInterface $form
@@ -51,16 +58,7 @@ class ReporterFormHandler
         if (true === $request->isMethod('POST')) {
             $form->submit($request);
             if (true === $form->isValid()) {
-                /** @var ReportInterface $report */
-                $report = $form->getData();
-                $metaInfo = array(
-                    'ip' => $request->getClientIp(),
-                    'locale' => $request->getLocale(),
-                    'path_info' => $request->getPathInfo(),
-                    'user_info' => $request->getUserInfo(),
-                );
-                $report->setMetaInfo(json_encode($metaInfo));
-                $this->reportManager->saveReport($report, true);
+                $this->reportManager->saveReport($form->getData(), true);
 
                 return true;
             }
@@ -69,9 +67,13 @@ class ReporterFormHandler
         return false;
     }
 
-    public function onSuccess()
+    /**
+     * On success.
+     *
+     * @param string $massage
+     */
+    public function onSuccess($massage)
     {
-
+        $this->session->getFlashBag()->set('flash_notices', array('success' => array($massage)));
     }
 }
- 

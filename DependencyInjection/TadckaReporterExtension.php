@@ -36,6 +36,7 @@ class TadckaReporterExtension extends Extension
         $loader->load('form/reporter.xml');
         $loader->load('form/status.xml');
         $loader->load('form/tracker.xml');
+        $loader->load('form/report.xml');
 
         if (!in_array(strtolower($config['db_driver']), array('mongodb', 'orm'))) {
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));

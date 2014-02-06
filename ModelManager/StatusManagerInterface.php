@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Tadcka package.
  *
@@ -27,6 +28,15 @@ interface StatusManagerInterface
      * @return null|StatusInterface
      */
     public function findStatus($id);
+
+    /**
+     * Get status choices.
+     *
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function getStatusChoices($locale);
 
     /**
      * Get all status count.

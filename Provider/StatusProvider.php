@@ -47,6 +47,21 @@ class StatusProvider implements StatusProviderInterface
     /**
      * {@inheritdoc}
      */
+    public function getChoices($locale)
+    {
+        $results = $this->statusManager->getStatusChoices($locale);
+
+        $data = array();
+        foreach ($results as $row) {
+            $data[$row['id']] = $row['title'];
+        }
+
+        return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getCount()
     {
         return $this->statusManager->getCount();

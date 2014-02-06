@@ -170,7 +170,7 @@ class TrackerController extends ContainerAware
                 'flash_notices',
                 array(
                     'success' => array(
-                        $this->getTranslator()->trans('tracker.delete.success', array(), 'TadckaTextBundle')
+                        $this->getTranslator()->trans('tracker.delete.success', array(), 'TadckaReporterBundle')
                     )
                 )
             );
@@ -197,4 +197,3 @@ class TrackerController extends ContainerAware
         );
     }
 }
- 

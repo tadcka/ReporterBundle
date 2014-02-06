@@ -39,6 +39,23 @@ interface ReportManagerInterface
     public function findReportByReporterEmail($email);
 
     /**
+     * Get all report count.
+     *
+     * @return int
+     */
+    public function getAllCount();
+
+    /**
+     * Get reports.
+     *
+     * @param null|int $offset
+     * @param null|int $limit
+     *
+     * @return array|ReportInterface[]
+     */
+    public function getReports($offset = null, $limit = null);
+
+    /**
      * Create report.
      *
      * @return ReportInterface

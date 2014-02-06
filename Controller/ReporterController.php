@@ -13,6 +13,7 @@ namespace Tadcka\ReporterBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -25,10 +26,14 @@ class ReporterController extends ContainerAware
     {
         $form = $this->container->get('tadcka_reporter.form_factory.reporter')->create($request->getLocale());
 
-        $formHandler= $this->container->get('tadcka_reporter.form_handler.reporter');
+        $formHandler = $this->container->get('tadcka_reporter.form_handler.reporter');
 
         if (true === $formHandler->process($request, $form)) {
-
+            return new Response($this->container->get('translator')->trans(
+                'reporter.success',
+                array(),
+                'TadckaReporterBundle'
+            ));
         }
 
         return $this->container->get('templating')->renderResponse(

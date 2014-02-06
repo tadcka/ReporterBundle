@@ -1,0 +1,13 @@
+{% trans_default_domain 'TadckaReporterBundle' %}
+
+{{ form_start(form) }}
+    {{ form_row(form.tracker) }}
+
+    {{ form_row(form.status) }}
+
+    <div>
+        {{ form_row(form.submit, {attr: {class: 'btn btn-primary pull-left'}}) }}
+        <a class="btn" href="{{ url('tadcka_reporter_reports') }}">{{ 'form.button.cancel'|trans }}</a>
+    </div>
+    {{ form_rest(form) }}
+{{ form_end(form) }}

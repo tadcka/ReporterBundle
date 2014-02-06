@@ -1,0 +1,51 @@
+/*
+ * This file is part of the Tadcka package.
+ *
+ * (c) Tadcka <tadcka89@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+.tadcka-reporter-panel {
+    padding: 15px;
+    width: 250px;
+    background: #DDDDDD;
+    border: #29216d 1px solid;
+    position: absolute;
+    top: 30%;
+    z-index: 100;
+    left: -282px;
+    height: 360px;
+}
+
+.tadcka-reporter-panel a.tadcka-reporter-link {
+    background-color: #0000FF;
+    border-width: 1px 1px 1px 1px;
+    display: block;
+    left: 46px;
+    position: relative;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    width: 30px;
+    text-align: center;
+    color: #FFFFFF;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    outline: none;
+    line-height: 1;
+}
+
+.tadcka-reporter-form input {
+    width: 200px;
+}
+
+.tadcka-reporter-form textarea {
+    width: 200px;
+    height: 80px;
+}
+
+.tadcka-reporter-form .form_error_list {
+    clear: none;
+}

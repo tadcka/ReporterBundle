@@ -14,6 +14,7 @@ namespace Tadcka\ReporterBundle\Doctrine\EntityManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query\Expr\Join;
 use Tadcka\ReporterBundle\Model\StatusInterface;
 use Tadcka\ReporterBundle\ModelManager\StatusManager as BaseStatusManager;
 
@@ -58,6 +59,21 @@ class StatusManager extends BaseStatusManager
     public function findStatus($id)
     {
         return $this->repository->find($id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStatusChoices($locale)
+    {
+        $qb = $this->repository->createQueryBuilder('s');
+
+        $qb->innerJoin('s.translations', 'trans', Join::WITH, $qb->expr()->eq('trans.lang', ':locale'))
+            ->setParameter('locale', $locale);
+
+        $qb->select('s.id, trans.title');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

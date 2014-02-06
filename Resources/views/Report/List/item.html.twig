@@ -1,0 +1,19 @@
+{% trans_default_domain 'TadckaReporterBundle' %}
+
+<td>{{ number }}</td>
+<td>{{ report.title }}</td>
+<td>{{ report.description }}</td>
+<td>{{ report.reporterEmail }}</td>
+
+{% set trackerTranslation = report.tracker.getTranslation(app.request.locale) %}
+<td>{{ trackerTranslation is not empty ? trackerTranslation.title : '' }}</td>
+{% set statusTranslation = report.status is not empty ? report.status.getTranslation(app.request.locale) : null %}
+<td>{{ statusTranslation is not empty ? statusTranslation.title : '' }}</td>
+<td>
+    <a href="{{ url('tadcka_reporter_report_update', {id: report.getId()}) }}" class="btn">
+        {{ 'button.update'|trans }}
+    </a>
+    <a href="{{ url('tadcka_reporter_report_delete', {id: report.getId()}) }}" class="btn btn-danger">
+        {{ 'button.delete'|trans }}
+    </a>
+</td>

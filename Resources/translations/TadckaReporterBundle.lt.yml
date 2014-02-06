@@ -19,7 +19,13 @@ form:
     label:
       title: Pavadinimas
       description: Aprašymas
+  report:
+    label:
+      tracker: Žymuo
+      status: Būsena
   tracker_choice:
+    empty_value: Pasirinkite
+  status_choice:
     empty_value: Pasirinkite
 
 tracker:
@@ -50,12 +56,30 @@ status:
     question: Ar tikrai norite trinti būseną: %name%?
     success: Sėkmingai ištrynėte būseną!
 
+report:
+  list:
+    title: ataskaitos
+  update:
+    title: Ataskaitos atnaujimas
+    success: Sėkmingai atnaujinote ataskaitą!
+  delete:
+    title: Trinimas ataskaitos
+    question: Ar tikrai norite trinti ataskaitą?
+    success: Sėkmingai ištrynėte ataskaitą!
+
+reporter:
+  success: Pranešimas sėkmingai užregistruotas!
+
 title: Pavadinimas
 description: Aprašymas
 action: Veiksmai
+reporter_email: Pranešėjo el. paštas
+tracker: Žymuo
+status: Būsena
 
 button:
   edit: Redaguoti
   delete: Trinti
   add_tracker: Pridėti žymenį
   add_status: Pridėti būseną
+  update: Atnaujinti

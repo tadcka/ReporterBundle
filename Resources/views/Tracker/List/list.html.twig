@@ -5,6 +5,6 @@
 {% block main_content %}
     <a class="btn btn-primary" href="{{ url('tadcka_reporter_tracker_add') }}">{{ 'button.add_tracker'|trans }}</a>
     <div class="row-fluid tadcka_reporter_tracker_container">
-        {% include 'TadckaReporterBundle:Tracker/List:content.html.twig' with {trackers: trackers} %}
+        {% include 'TadckaReporterBundle:Tracker/List:content.html.twig' with {trackers: trackers, pages: pages} %}
     </div>
 {% endblock %}

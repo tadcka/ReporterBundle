@@ -21,7 +21,7 @@ use Tadcka\ReporterBundle\ModelManager\TrackerManagerInterface;
  *
  * @since 1/30/14 11:50 PM
  */
-class TrackerFormHandler 
+class TrackerFormHandler
 {
     /**
      * @var TrackerManagerInterface
@@ -77,4 +77,3 @@ class TrackerFormHandler
         $this->session->getFlashBag()->set('flash_notices', array('success' => array($massage)));
     }
 }
- 

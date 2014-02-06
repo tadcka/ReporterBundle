@@ -170,7 +170,7 @@ class StatusController extends ContainerAware
                 'flash_notices',
                 array(
                     'success' => array(
-                        $this->getTranslator()->trans('status.delete.success', array(), 'TadckaTextBundle')
+                        $this->getTranslator()->trans('status.delete.success', array(), 'TadckaReporterBundle')
                     )
                 )
             );
@@ -197,4 +197,3 @@ class StatusController extends ContainerAware
         );
     }
 }
- 

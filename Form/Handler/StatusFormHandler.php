@@ -21,7 +21,7 @@ use Tadcka\ReporterBundle\ModelManager\StatusManagerInterface;
  *
  * @since 1/30/14 11:50 PM
  */
-class StatusFormHandler 
+class StatusFormHandler
 {
     /**
      * @var StatusManagerInterface
@@ -77,4 +77,3 @@ class StatusFormHandler
         $this->session->getFlashBag()->set('flash_notices', array('success' => array($massage)));
     }
 }
- 

@@ -1,0 +1,13 @@
+{% extends 'TadckaReporterBundle::layout.html.twig' %}
+
+{% block main_content %}
+    <div class="row-fluid">
+        <div>
+            {% for key, info in meta_info %}
+                {{ key ~ ': ' ~ info }}<br>
+            {% endfor %}
+        </div>
+        <br>
+        {% include 'TadckaReporterBundle:Report/Form:report.html.twig' with {form: form} %}
+    </div>
+{% endblock %}

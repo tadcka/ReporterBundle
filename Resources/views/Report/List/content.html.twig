@@ -1,0 +1,28 @@
+{% trans_default_domain 'TadckaReporterBundle' %}
+
+{% block main_content %}
+    {% if pages is not empty %}
+        {{ pages|raw }}
+    {% endif %}
+
+    <table class="table">
+        <tr>
+            <th>Nr.</th>
+            <th>{{ 'title'|trans }}</th>
+            <th>{{ 'description'|trans }}</th>
+            <th>{{ 'reporter_email'|trans }}</th>
+            <th>{{ 'tracker'|trans }}</th>
+            <th>{{ 'status'|trans }}</th>
+            <th>{{ 'action'|trans }}</th>
+        </tr>
+        {% for key, report in reports %}
+            <tr>
+                {% include 'TadckaReporterBundle:Report/List:item.html.twig' with {report: report, number: (key + 1)} %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if pages is not empty %}
+        {{ pages|raw }}
+    {% endif %}
+{% endblock %}
