@@ -1,0 +1,24 @@
+{
+    "name":         "tadcka/reporter-bundle",
+    "homepage":     "https://github.com/tadcka/ReporterBundle",
+    "description":  "Reporter bundle on Symfony2",
+    "keywords":     ["reporter", "report task", "report bug"],
+    "type":         "symfony-bundle",
+    "license":      "MIT",
+    "authors": [
+        {
+            "name":   "Tadas Gliaubicas",
+            "email":  "tadcka89@gmail.com"
+        }
+    ],
+	"minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony" : ">=2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tadcka\\ReporterBundle\\": ""
+        }
+    }
+}
