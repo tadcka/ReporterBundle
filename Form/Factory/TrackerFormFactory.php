@@ -23,22 +23,12 @@ use Tadcka\ReporterBundle\ModelManager\TrackerManagerInterface;
  *
  * @since 1/30/14 11:50 PM
  */
-class TrackerFormFactory 
+class TrackerFormFactory
 {
     /**
- * @var FormFactoryInterface
- */
+     * @var FormFactoryInterface
+     */
     private $formFactory;
-
-    /**
-     * @var TrackerManagerInterface
-     */
-    private $trackerManager;
-
-    /**
-     * @var string
-     */
-    private $translationDataClass;
 
     /**
      * @var RouterInterface
@@ -46,46 +36,50 @@ class TrackerFormFactory
     private $router;
 
     /**
+     * @var string
+     */
+    private $trackerClass;
+
+    /**
+     * @var string
+     */
+    private $trackerTranslationClass;
+
+    /**
      * Constructor.
      *
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
-     * @param TrackerManagerInterface $trackerManager
-     * @param string $translationDataClass
-     *
-     * @internal param string $dataClass
+     * @param string $trackerClass
+     * @param string $trackerTranslationClass
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         RouterInterface $router,
-        TrackerManagerInterface $trackerManager,
-        $translationDataClass
+        $trackerClass,
+        $trackerTranslationClass
     ) {
-        $this->trackerManager = $trackerManager;
         $this->formFactory = $formFactory;
-        $this->translationDataClass = $translationDataClass;
         $this->router = $router;
+        $this->trackerClass = $trackerClass;
+        $this->trackerTranslationClass = $trackerTranslationClass;
     }
 
     /**
      * Create tracker form.
      *
-     * @param null|TrackerInterface $data
+     * @param TrackerInterface $tracker
      *
      * @return FormInterface
      */
-    public function create(TrackerInterface $data = null)
+    public function create(TrackerInterface $tracker)
     {
-        if (null === $data) {
-            $data = $this->trackerManager->createTracker();
-        }
-
         return $this->formFactory->create(
             new TrackerFormType(),
-            $data,
+            $tracker,
             array(
-                'data_class' => $this->trackerManager->getClass(),
-                'translation_data_class' => $this->translationDataClass,
+                'data_class' => $this->trackerClass,
+                'translation_data_class' => $this->trackerTranslationClass,
                 'action' => $this->router->getContext()->getPathInfo(),
             )
         );

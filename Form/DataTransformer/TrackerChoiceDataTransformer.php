@@ -13,7 +13,7 @@ namespace Tadcka\ReporterBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Tadcka\ReporterBundle\Model\TrackerInterface;
-use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
+use Tadcka\ReporterBundle\Provider\ProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -23,18 +23,18 @@ use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
 class TrackerChoiceDataTransformer implements DataTransformerInterface
 {
     /**
-     * @var TrackerProviderInterface
+     * @var ProviderInterface
      */
-    private $trackerProvider;
+    private $provider;
 
     /**
      * Constructor.
      *
-     * @param TrackerProviderInterface $trackerProvider
+     * @param ProviderInterface $provider
      */
-    public function __construct(TrackerProviderInterface $trackerProvider)
+    public function __construct(ProviderInterface $provider)
     {
-        $this->trackerProvider = $trackerProvider;
+        $this->provider = $provider;
     }
 
     /**
@@ -47,10 +47,10 @@ class TrackerChoiceDataTransformer implements DataTransformerInterface
     public function transform($value)
     {
         if (null !== $value) {
-            return $value->getId();
+            $value = $value->getId();
         }
 
-        return null;
+        return $value;
     }
 
     /**
@@ -63,9 +63,9 @@ class TrackerChoiceDataTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         if (null !== $value) {
-            return $this->trackerProvider->getTracker($value);
+            $value = $this->provider->getTracker($value);
         }
 
-        return null;
+        return $value;
     }
 }

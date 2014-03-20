@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Tadcka\ReporterBundle\Form\Type\ReporterFormType;
 use Tadcka\ReporterBundle\Model\ReportInterface;
-use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
+use Tadcka\ReporterBundle\Provider\ProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -36,53 +36,54 @@ class ReporterFormFactory
     private $router;
 
     /**
-     * @var TrackerProviderInterface
+     * @var ProviderInterface
      */
-    private $trackerProvider;
+    private $provider;
 
     /**
      * @var string
      */
-    private $dataClass;
+    private $reportClass;
 
     /**
      * Constructor.
      *
      * @param FormFactoryInterface $formFactory
      * @param RouterInterface $router
-     * @param TrackerProviderInterface $trackerProvider
-     * @param string $dataClass
+     * @param ProviderInterface $provider
+     * @param string $reportClass
+     *
+     * @internal param string $dataClass
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         RouterInterface $router,
-        TrackerProviderInterface $trackerProvider,
-        $dataClass
+        ProviderInterface $provider,
+        $reportClass
     ) {
         $this->formFactory = $formFactory;
         $this->router = $router;
-        $this->dataClass = $dataClass;
-        $this->trackerProvider = $trackerProvider;
+        $this->provider = $provider;
+        $this->reportClass = $reportClass;
     }
 
     /**
      * Create report form.
      *
      * @param string $locale
-     * @param null|ReportInterface $data
+     * @param ReportInterface $report
      *
      * @return FormInterface
      */
-    public function create($locale, ReportInterface $data = null)
+    public function create($locale, ReportInterface $report)
     {
         return $this->formFactory->create(
-            new ReporterFormType($this->trackerProvider),
-            $data,
+            new ReporterFormType($this->provider),
+            $report,
             array(
-                'data_class' => $this->dataClass,
+                'data_class' => $this->reportClass,
                 'action' => $this->router->generate('tadcka_reporter'),
-                'attr' => array('class' => 'tadcka-reporter-form'),
-                'locale' => $locale,
+                'tracker_choices' => $this->provider->getTrackerChoices($locale),
             )
         );
     }

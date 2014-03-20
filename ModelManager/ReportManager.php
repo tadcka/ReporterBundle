@@ -21,7 +21,7 @@ abstract class ReportManager implements ReportManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createReport()
+    public function create()
     {
         $className = $this->getClass();
         $report = new $className;

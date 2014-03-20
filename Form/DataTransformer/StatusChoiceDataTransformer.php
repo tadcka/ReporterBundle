@@ -13,6 +13,7 @@ namespace Tadcka\ReporterBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Tadcka\ReporterBundle\Model\StatusInterface;
+use Tadcka\ReporterBundle\Provider\ProviderInterface;
 use Tadcka\ReporterBundle\Provider\StatusProviderInterface;
 
 /**
@@ -23,18 +24,18 @@ use Tadcka\ReporterBundle\Provider\StatusProviderInterface;
 class StatusChoiceDataTransformer implements DataTransformerInterface
 {
     /**
-     * @var StatusProviderInterface
+     * @var ProviderInterface
      */
-    private $statusProvider;
+    private $provider;
 
     /**
      * Constructor.
      *
-     * @param StatusProviderInterface $statusProvider
+     * @param ProviderInterface $provider
      */
-    public function __construct(StatusProviderInterface $statusProvider)
+    public function __construct(ProviderInterface $provider)
     {
-        $this->statusProvider = $statusProvider;
+        $this->provider = $provider;
     }
 
     /**
@@ -47,10 +48,10 @@ class StatusChoiceDataTransformer implements DataTransformerInterface
     public function transform($value)
     {
         if (null !== $value) {
-            return $value->getId();
+            $value = $value->getId();
         }
 
-        return null;
+        return $value;
     }
 
     /**
@@ -63,9 +64,9 @@ class StatusChoiceDataTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         if (null !== $value) {
-            return $this->statusProvider->getStatus($value);
+            $value = $this->provider->getStatus($value);
         }
 
-        return null;
+        return $value;
     }
 }

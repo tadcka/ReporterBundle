@@ -14,9 +14,13 @@ namespace Tadcka\ReporterBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Translation\TranslatorInterface;
 use Tadcka\Component\Breadcrumbs\Breadcrumbs;
 use Tadcka\Component\Paginator\Pagination;
+use Tadcka\ReporterBundle\Form\Factory\ReportFormFactory;
+use Tadcka\ReporterBundle\Form\Handler\ReportFormHandler;
+use Tadcka\ReporterBundle\ModelManager\ReportManagerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -34,23 +38,47 @@ class ReportController extends ContainerAware
     }
 
     /**
-     * @return \Tadcka\ReporterBundle\Provider\ReportProvider
+     * @return ReportFormFactory
      */
-    private function getReportProvider()
+    private function getFormFactory()
     {
-        return $this->container->get('tadcka_reporter.report_provider');
+        return $this->container->get('tadcka_reporter.form_factory.report');
     }
 
+    /**
+     * @return ReportFormHandler
+     */
+    private function getFormHandler()
+    {
+        return $this->container->get('tadcka_reporter.form_handler.report');
+    }
+
+    /**
+     * @return ReportManagerInterface
+     */
+    private function getManager()
+    {
+        return $this->container->get('tadcka_reporter.manager.report');
+    }
+
+    /**
+     * Report list action.
+     *
+     * @param Request $request
+     * @param int $page
+     *
+     * @return Response
+     */
     public function indexAction(Request $request, $page = 1)
     {
         $page = $request->get('page', $page);
-        $count = $this->getReportProvider()->getCount();
+        $count = $this->getManager()->count();
         $pagination = new Pagination($count, $page, 30);
         if ($page !== $pagination->getCurrentPage()) {
             $pagination = new Pagination($count, 1, 30);
         }
 
-        $reports = $this->getReportProvider()->getReports(
+        $reports = $this->getManager()->findManyReports(
             $pagination->getOffset(),
             $pagination->getItemsPerPage()
         );
@@ -71,18 +99,29 @@ class ReportController extends ContainerAware
         );
     }
 
+    /**
+     * Report update action.
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return RedirectResponse|Response
+     *
+     * @throws \LogicException
+     */
     public function updateAction(Request $request, $id)
     {
-        $report = $this->getReportProvider()->getReport($id);
+        $report = $this->getManager()->find($id);
 
         if (null === $report) {
             throw new \LogicException('Not fount report!');
         }
-
-        $form = $this->container->get('tadcka_reporter.form_factory.report')->create($request->getLocale(), $report);
-        $formHandler = $this->container->get('tadcka_reporter.form_handler.report');
+        $form = $this->getFormFactory()->create($request->getLocale(), $report);
+        $formHandler = $this->getFormHandler();
 
         if (true === $formHandler->process($request, $form)) {
+            $this->getManager()->save();
+
             $formHandler->onSuccess(
                 $this->getTranslator()->trans('report.update.success', array(), 'TadckaReporterBundle')
             );
@@ -111,17 +150,26 @@ class ReportController extends ContainerAware
         );
     }
 
-
+    /**
+     * Report delete action.
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return RedirectResponse|Response
+     *
+     * @throws \LogicException
+     */
     public function deleteAction(Request $request, $id)
     {
-        $report = $this->getReportProvider()->getReport($id);
+        $report = $this->getManager()->find($id);
 
         if (null === $report) {
             throw new \LogicException('Not fount report!');
         }
 
         if (true === $request->isMethod('POST')) {
-            $this->getReportProvider()->deleteStatus($report);
+            $this->getManager()->delete($report, true);
             $this->container->get('session')->getFlashBag()->set(
                 'flash_notices',
                 array(

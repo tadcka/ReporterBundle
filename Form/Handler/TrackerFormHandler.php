@@ -58,7 +58,7 @@ class TrackerFormHandler
         if (true === $request->isMethod('POST')) {
             $form->submit($request);
             if (true === $form->isValid()) {
-                $this->trackerManager->saveTracker($form->getData(), true);
+                $this->trackerManager->add($form->getData());
 
                 return true;
             }

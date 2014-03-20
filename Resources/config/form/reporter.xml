@@ -16,13 +16,13 @@
         <service id="tadcka_reporter.form_factory.reporter" class="%tadcka_reporter.form_factory.reporter.class%">
             <argument type="service" id="form.factory" />
             <argument type="service" id="router" />
-            <argument type="service" id="tadcka_reporter.tracker_provider" />
-            <argument>%tadcka_reporter.model.report_class%</argument>
+            <argument type="service" id="tadcka_reporter.provider" />
+            <argument>%tadcka_reporter.model.report.class%</argument>
         </service>
 
         <!--Report form handler-->
         <service id="tadcka_reporter.form_handler.reporter" class="%tadcka_reporter.form_handler.reporter.class%">
-            <argument type="service" id="tadcka_reporter.manager.report.default" />
+            <argument type="service" id="tadcka_reporter.manager.report" />
         </service>
 
     </services>

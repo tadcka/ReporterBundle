@@ -16,13 +16,13 @@
         <service id="tadcka_reporter.form_factory.status" class="%tadcka_reporter.form_factory.status.class%">
             <argument type="service" id="form.factory" />
             <argument type="service" id="router" />
-            <argument type="service" id="tadcka_reporter.manager.status.default" />
-            <argument>%tadcka_reporter.model.status_translation_class%</argument>
+            <argument>%tadcka_reporter.model.status.class%</argument>
+            <argument>%tadcka_reporter.model.status_translation.class%</argument>
         </service>
 
         <!--Status form handler-->
         <service id="tadcka_reporter.form_handler.status" class="%tadcka_reporter.form_handler.status.class%">
-            <argument type="service" id="tadcka_reporter.manager.status.default" />
+            <argument type="service" id="tadcka_reporter.manager.status" />
             <argument type="service" id="session" />
         </service>
 

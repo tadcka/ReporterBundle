@@ -14,8 +14,13 @@ namespace Tadcka\ReporterBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\TranslatorInterface;
 use Tadcka\Component\Breadcrumbs\Breadcrumbs;
 use Tadcka\Component\Paginator\Pagination;
+use Tadcka\ReporterBundle\Form\Factory\StatusFormFactory;
+use Tadcka\ReporterBundle\Form\Handler\StatusFormHandler;
+use Tadcka\ReporterBundle\ModelManager\StatusManagerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -25,7 +30,7 @@ use Tadcka\Component\Paginator\Pagination;
 class StatusController extends ContainerAware
 {
     /**
-     * @return \Symfony\Component\Translation\TranslatorInterface
+     * @return TranslatorInterface
      */
     private function getTranslator()
     {
@@ -33,39 +38,47 @@ class StatusController extends ContainerAware
     }
 
     /**
-     * @return \Tadcka\ReporterBundle\Form\Factory\StatusFormFactory
+     * @return StatusFormFactory
      */
-    private function getStatusFormFactory()
+    private function getFormFactory()
     {
         return $this->container->get('tadcka_reporter.form_factory.status');
     }
 
     /**
-     * @return \Tadcka\ReporterBundle\Form\Handler\StatusFormHandler
+     * @return StatusFormHandler
      */
-    private function getStatusFormHandler()
+    private function getFormHandler()
     {
         return $this->container->get('tadcka_reporter.form_handler.status');
     }
 
     /**
-     * @return \Tadcka\ReporterBundle\Provider\StatusProviderInterface
+     * @return StatusManagerInterface
      */
-    private function getStatusProvider()
+    private function getManager()
     {
-        return $this->container->get('tadcka_reporter.status_provider');
+        return $this->container->get('tadcka_reporter.manager.status');
     }
 
+    /**
+     * Status list action.
+     *
+     * @param Request $request
+     * @param int $page
+     *
+     * @return Response
+     */
     public function indexAction(Request $request, $page = 1)
     {
         $page = $request->get('page', $page);
-        $count = $this->getStatusProvider()->getCount();
+        $count = $this->getManager()->count();
         $pagination = new Pagination($count, $page, 30);
         if ($page !== $pagination->getCurrentPage()) {
             $pagination = new Pagination($count, 1, 30);
         }
 
-        $statuses = $this->getStatusProvider()->getStatuses(
+        $statuses = $this->getManager()->findManyStatuses(
             $pagination->getOffset(),
             $pagination->getItemsPerPage()
         );
@@ -86,12 +99,21 @@ class StatusController extends ContainerAware
         );
     }
 
+    /**
+     * Status add action.
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
     public function addAction(Request $request)
     {
-        $form = $this->getStatusFormFactory()->create();
-        $formHandler = $this->getStatusFormHandler();
+        $form = $this->getFormFactory()->create($this->getManager()->create());
+        $formHandler = $this->getFormHandler();
 
         if (true === $formHandler->process($request, $form)) {
+            $this->getManager()->save();
+
             $formHandler->onSuccess(
                 $this->getTranslator()->trans('status.add.success', array(), 'TadckaReporterBundle')
             );
@@ -118,18 +140,30 @@ class StatusController extends ContainerAware
         );
     }
 
+    /**
+     * Status edit action.
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return RedirectResponse|Response
+     *
+     * @throws \LogicException
+     */
     public function editAction(Request $request, $id)
     {
-        $status = $this->getStatusProvider()->getStatus($id);
+        $status = $this->getManager()->find($id);
 
         if (null === $status) {
             throw new \LogicException('Not fount status!');
         }
 
-        $form = $this->getStatusFormFactory()->create($status);
-        $formHandler = $this->getStatusFormHandler();
+        $form = $this->getFormFactory()->create($status);
+        $formHandler = $this->getFormHandler();
 
         if (true === $formHandler->process($request, $form)) {
+            $this->getManager()->save();
+
             $formHandler->onSuccess(
                 $this->getTranslator()->trans('status.edit.success', array(), 'TadckaReporterBundle')
             );
@@ -156,16 +190,26 @@ class StatusController extends ContainerAware
         );
     }
 
+    /**
+     * Status delete action.
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return RedirectResponse|Response
+     *
+     * @throws \LogicException
+     */
     public function deleteAction(Request $request, $id)
     {
-        $status = $this->getStatusProvider()->getStatus($id);
+        $status = $this->getManager()->find($id);
 
         if (null === $status) {
             throw new \LogicException('Not fount status!');
         }
 
         if (true === $request->isMethod('POST')) {
-            $this->getStatusProvider()->deleteStatus($status);
+            $this->getManager()->delete($status, true);
             $this->container->get('session')->getFlashBag()->set(
                 'flash_notices',
                 array(

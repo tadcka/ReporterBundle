@@ -15,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Tadcka\ReporterBundle\Form\DataTransformer\StatusChoiceDataTransformer;
-use Tadcka\ReporterBundle\Provider\StatusProviderInterface;
+use Tadcka\ReporterBundle\Provider\ProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -25,18 +25,18 @@ use Tadcka\ReporterBundle\Provider\StatusProviderInterface;
 class StatusChoiceFormType extends AbstractType
 {
     /**
-     * @var StatusProviderInterface
+     * @var ProviderInterface
      */
-    private $statusProvider;
+    private $provider;
 
     /**
      * Constructor.
      *
-     * @param StatusProviderInterface $statusProvider
+     * @param ProviderInterface $provider
      */
-    public function __construct(StatusProviderInterface $statusProvider)
+    public function __construct(ProviderInterface $provider)
     {
-        $this->statusProvider = $statusProvider;
+        $this->provider = $provider;
     }
 
     /**
@@ -44,7 +44,7 @@ class StatusChoiceFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new StatusChoiceDataTransformer($this->statusProvider);
+        $transformer = new StatusChoiceDataTransformer($this->provider);
         $builder->addModelTransformer($transformer);
     }
 

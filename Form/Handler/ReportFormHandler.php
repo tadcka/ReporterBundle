@@ -58,7 +58,7 @@ class ReportFormHandler
         if (true === $request->isMethod('POST')) {
             $form->submit($request);
             if (true === $form->isValid()) {
-                $this->reportManager->saveReport($form->getData(), true);
+                $this->reportManager->add($form->getData());
 
                 return true;
             }

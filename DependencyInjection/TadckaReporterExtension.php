@@ -43,16 +43,29 @@ class TadckaReporterExtension extends Extension
         }
         $loader->load('db_driver/' . sprintf('%s.xml', $config['db_driver']));
 
-        $container->setParameter('tadcka_reporter.model.report_class', $config['class']['model']['report']);
-        $container->setParameter('tadcka_reporter.model.status_class', $config['class']['model']['status']);
         $container->setParameter(
-            'tadcka_reporter.model.status_translation_class',
+            'tadcka_reporter.model.report.class',
+            $config['class']['model']['report']
+        );
+        $container->setParameter(
+            'tadcka_reporter.model.status.class',
+            $config['class']['model']['status']
+        );
+        $container->setParameter(
+            'tadcka_reporter.model.status_translation.class',
             $config['class']['model']['status_translation']
         );
-        $container->setParameter('tadcka_reporter.model.tracker_class', $config['class']['model']['tracker']);
         $container->setParameter(
-            'tadcka_reporter.model.tracker_translation_class',
+            'tadcka_reporter.model.tracker.class',
+            $config['class']['model']['tracker']
+        );
+        $container->setParameter(
+            'tadcka_reporter.model.tracker_translation.class',
             $config['class']['model']['tracker_translation']
         );
+
+        $container->setAlias('tadcka_reporter.manager.report', $config['report_manager']);
+        $container->setAlias('tadcka_reporter.manager.status', $config['status_manager']);
+        $container->setAlias('tadcka_reporter.manager.tracker', $config['tracker_manager']);
     }
 }

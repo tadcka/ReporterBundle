@@ -18,7 +18,7 @@ use Tadcka\ReporterBundle\Model\StatusInterface;
  *
  * @since 1/28/14 12:52 AM
  */
-interface StatusManagerInterface 
+interface StatusManagerInterface
 {
     /**
      * Find status by id.
@@ -27,56 +27,66 @@ interface StatusManagerInterface
      *
      * @return null|StatusInterface
      */
-    public function findStatus($id);
+    public function find($id);
 
     /**
-     * Get status choices.
+     * Find status choices by locale.
      *
      * @param string $locale
      *
      * @return array
      */
-    public function getStatusChoices($locale);
+    public function findStatusChoicesByLocale($locale);
 
     /**
      * Get all status count.
      *
      * @return int
      */
-    public function getCount();
+    public function count();
 
     /**
-     * Get statuses.
+     * Find many statuses.
      *
      * @param null|int $offset
      * @param null|int $limit
      *
      * @return array|StatusInterface[]
      */
-    public function getStatuses($offset = null, $limit = null);
+    public function findManyStatuses($offset = null, $limit = null);
 
     /**
      * Create status.
      *
      * @return StatusInterface
      */
-    public function createStatus();
+    public function create();
 
     /**
-     * Save status.
+     * Add status.
      *
      * @param StatusInterface $status
-     * @param bool $flush
+     * @param bool $save
      */
-    public function saveStatus(StatusInterface $status, $flush = false);
+    public function add(StatusInterface $status, $save = false);
 
     /**
      * Delete status.
      *
      * @param StatusInterface $status
-     * @param bool $flush
+     * @param bool $save
      */
-    public function deleteStatus(StatusInterface $status, $flush = false);
+    public function delete(StatusInterface $status, $save = false);
+
+    /**
+     * Save persistent layer.
+     */
+    public function save();
+
+    /**
+     * Clear status objects from persistent layer.
+     */
+    public function clear();
 
     /**
      * Get status class name.

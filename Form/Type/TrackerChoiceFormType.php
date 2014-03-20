@@ -15,7 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Tadcka\ReporterBundle\Form\DataTransformer\TrackerChoiceDataTransformer;
-use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
+use Tadcka\ReporterBundle\Provider\ProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -25,18 +25,18 @@ use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
 class TrackerChoiceFormType extends AbstractType
 {
     /**
-     * @var TrackerProviderInterface
+     * @var ProviderInterface
      */
-    private $trackerProvider;
+    private $provider;
 
     /**
      * Constructor.
      *
-     * @param TrackerProviderInterface $trackerProvider
+     * @param ProviderInterface $provider
      */
-    public function __construct(TrackerProviderInterface $trackerProvider)
+    public function __construct(ProviderInterface $provider)
     {
-        $this->trackerProvider = $trackerProvider;
+        $this->provider = $provider;
     }
 
     /**
@@ -44,7 +44,7 @@ class TrackerChoiceFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $transformer = new TrackerChoiceDataTransformer($this->trackerProvider);
+        $transformer = new TrackerChoiceDataTransformer($this->provider);
         $builder->addModelTransformer($transformer);
     }
 

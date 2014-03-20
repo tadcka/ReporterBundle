@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
-use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
+use Tadcka\ReporterBundle\Provider\ProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -27,18 +27,18 @@ use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
 class ReporterFormType extends AbstractType
 {
     /**
-     * @var TrackerProviderInterface
+     * @var ProviderInterface
      */
-    private $trackerProvider;
+    private $provider;
 
     /**
      * Constructor.
      *
-     * @param TrackerProviderInterface $trackerProvider
+     * @param ProviderInterface $provider
      */
-    public function __construct(TrackerProviderInterface $trackerProvider)
+    public function __construct(ProviderInterface $provider)
     {
-        $this->trackerProvider = $trackerProvider;
+        $this->provider = $provider;
     }
 
     /**
@@ -57,11 +57,11 @@ class ReporterFormType extends AbstractType
 
         $builder->add(
             'tracker',
-            new TrackerChoiceFormType($this->trackerProvider),
+            new TrackerChoiceFormType($this->provider),
             array(
                 'label' => 'form.reporter.label.tracker',
                 'constraints' => array(new NotNull()),
-                'choices' => $this->trackerProvider->getChoices($options['locale'])
+                'choices' => $options['tracker_choices']
             )
         );
 
@@ -98,11 +98,12 @@ class ReporterFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setOptional(array('locale'));
+        $resolver->setOptional(array('tracker_choices'));
 
         $resolver->setDefaults(
             array(
                 'translation_domain' => 'TadckaReporterBundle',
+                'attr' => array('class' => 'tadcka-reporter-form'),
             )
         );
     }
@@ -115,4 +116,3 @@ class ReporterFormType extends AbstractType
         return 'tadcka_reporter';
     }
 }
- 

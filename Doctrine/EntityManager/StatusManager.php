@@ -56,7 +56,7 @@ class StatusManager extends BaseStatusManager
     /**
      * {@inheritdoc}
      */
-    public function findStatus($id)
+    public function find($id)
     {
         return $this->repository->find($id);
     }
@@ -64,7 +64,7 @@ class StatusManager extends BaseStatusManager
     /**
      * {@inheritdoc}
      */
-    public function getStatusChoices($locale)
+    public function findStatusChoicesByLocale($locale)
     {
         $qb = $this->repository->createQueryBuilder('s');
 
@@ -79,7 +79,7 @@ class StatusManager extends BaseStatusManager
     /**
      * {@inheritdoc}
      */
-    public function getCount()
+    public function count()
     {
         $qb = $this->repository->createQueryBuilder('s');
 
@@ -88,16 +88,15 @@ class StatusManager extends BaseStatusManager
         try {
             return $qb->getQuery()->getSingleScalarResult();
         } catch (NoResultException $e) {
-            return 0;
-        } catch (\Exception $e) {
-            return 0;
         }
+
+        return 0;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getStatuses($offset = null, $limit = null)
+    public function findManyStatuses($offset = null, $limit = null)
     {
         $qb = $this->repository->createQueryBuilder('s');
 
@@ -119,25 +118,41 @@ class StatusManager extends BaseStatusManager
     /**
      * {@inheritdoc}
      */
-    public function saveStatus(StatusInterface $status, $flush = false)
+    public function add(StatusInterface $status, $save = false)
     {
         $this->em->persist($status);
 
-        if (true === $flush) {
-            $this->em->flush();
+        if (true === $save) {
+            $this->save();
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function deleteStatus(StatusInterface $status, $flush = false)
+    public function delete(StatusInterface $status, $save = false)
     {
         $this->em->remove($status);
 
-        if (true === $flush) {
-            $this->em->flush();
+        if (true === $save) {
+            $this->save();
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save()
+    {
+        $this->em->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        $this->em->clear($this->class);
     }
 
     /**
@@ -148,4 +163,3 @@ class StatusManager extends BaseStatusManager
         return $this->class;
     }
 }
- 

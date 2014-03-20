@@ -12,13 +12,14 @@
 namespace Tadcka\ReporterBundle\Provider;
 
 use Tadcka\ReporterBundle\Model\StatusInterface;
+use Tadcka\ReporterBundle\Model\TrackerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
- * @since 14.2.1 21.54
+ * @since 3/20/14 8:58 PM
  */
-interface StatusProviderInterface
+interface ProviderInterface
 {
     /**
      * Get status.
@@ -30,35 +31,29 @@ interface StatusProviderInterface
     public function getStatus($id);
 
     /**
-     * Get choices.
+     * Get status choices by locale.
      *
      * @param string $locale
      *
      * @return array
      */
-    public function getChoices($locale);
+    public function getStatusChoices($locale);
 
     /**
-     * Get all status count.
+     * Get tracker.
      *
-     * @return int
+     * @param int $id
+     *
+     * @return null|TrackerInterface
      */
-    public function getCount();
+    public function getTracker($id);
 
     /**
-     * Get statuses.
+     * Get tracker choices by locale.
      *
-     * @param null|int $offset
-     * @param null|int $limit
+     * @param string $locale
      *
-     * @return array|StatusInterface[]
+     * @return array
      */
-    public function getStatuses($offset = null, $limit = null);
-
-    /**
-     * Delete status.
-     *
-     * @param StatusInterface $status
-     */
-    public function deleteStatus(StatusInterface $status);
+    public function getTrackerChoices($locale);
 }

@@ -27,7 +27,7 @@ interface ReportManagerInterface
      *
      * @return null|ReportInterface
      */
-    public function findReport($id);
+    public function find($id);
 
     /**
      * Find report by reporter email.
@@ -43,40 +43,50 @@ interface ReportManagerInterface
      *
      * @return int
      */
-    public function getAllCount();
+    public function count();
 
     /**
-     * Get reports.
+     * Find many reports.
      *
      * @param null|int $offset
      * @param null|int $limit
      *
      * @return array|ReportInterface[]
      */
-    public function getReports($offset = null, $limit = null);
+    public function findManyReports($offset = null, $limit = null);
 
     /**
      * Create report.
      *
      * @return ReportInterface
      */
-    public function createReport();
+    public function create();
 
     /**
-     * Save report.
+     * Add report.
      *
      * @param ReportInterface $report
-     * @param bool $flush
+     * @param bool $save
      */
-    public function saveReport(ReportInterface $report, $flush = false);
+    public function add(ReportInterface $report, $save = false);
 
     /**
      * Delete report.
      *
      * @param ReportInterface $report
-     * @param bool $flush
+     * @param bool $save
      */
-    public function deleteReport(ReportInterface $report, $flush = false);
+    public function delete(ReportInterface $report, $save = false);
+
+    /**
+     * Save persistent layer.
+     */
+    public function save();
+
+    /**
+     * Clear report objects from persistent layer.
+     */
+    public function clear();
 
     /**
      * Get report class name.

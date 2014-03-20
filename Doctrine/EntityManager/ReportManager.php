@@ -55,7 +55,7 @@ class ReportManager extends BaseReportManager
     /**
      * {@inheritdoc}
      */
-    public function findReport($id)
+    public function find($id)
     {
         return $this->repository->find($id);
     }
@@ -71,7 +71,7 @@ class ReportManager extends BaseReportManager
     /**
      * {@inheritdoc}
      */
-    public function getAllCount()
+    public function count()
     {
         $qb = $this->repository->createQueryBuilder('r');
 
@@ -80,16 +80,15 @@ class ReportManager extends BaseReportManager
         try {
             return $qb->getQuery()->getSingleScalarResult();
         } catch (NoResultException $e) {
-            return 0;
-        } catch (\Exception $e) {
-            return 0;
         }
+
+        return 0;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getReports($offset = null, $limit = null)
+    public function findManyReports($offset = null, $limit = null)
     {
         $qb = $this->repository->createQueryBuilder('r');
 
@@ -109,25 +108,41 @@ class ReportManager extends BaseReportManager
     /**
      * {@inheritdoc}
      */
-    public function saveReport(ReportInterface $report, $flush = false)
+    public function add(ReportInterface $report, $save = false)
     {
         $this->em->persist($report);
 
-        if (true === $flush) {
-            $this->em->flush();
+        if (true === $save) {
+            $this->save();
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function deleteReport(ReportInterface $report, $flush = false)
+    public function delete(ReportInterface $report, $save = false)
     {
         $this->em->remove($report);
 
-        if (true === $flush) {
-            $this->em->flush();
+        if (true === $save) {
+            $this->save();
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save()
+    {
+        $this->em->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        $this->em->clear($this->class);
     }
 
     /**

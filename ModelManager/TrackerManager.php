@@ -21,7 +21,7 @@ abstract class TrackerManager implements TrackerManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createTracker()
+    public function create()
     {
         $className = $this->getClass();
         $tracker = new $className;

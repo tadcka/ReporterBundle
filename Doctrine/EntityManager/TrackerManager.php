@@ -56,7 +56,7 @@ class TrackerManager extends BaseTrackerManager
     /**
      * {@inheritdoc}
      */
-    public function findTracker($id)
+    public function find($id)
     {
         return $this->repository->find($id);
     }
@@ -64,7 +64,7 @@ class TrackerManager extends BaseTrackerManager
     /**
      * {@inheritdoc}
      */
-    public function getTrackerChoices($locale)
+    public function findTrackerChoicesByLocale($locale)
     {
         $qb = $this->repository->createQueryBuilder('t');
 
@@ -79,7 +79,7 @@ class TrackerManager extends BaseTrackerManager
     /**
      * {@inheritdoc}
      */
-    public function getCount()
+    public function count()
     {
         $qb = $this->repository->createQueryBuilder('t');
 
@@ -88,16 +88,15 @@ class TrackerManager extends BaseTrackerManager
         try {
             return $qb->getQuery()->getSingleScalarResult();
         } catch (NoResultException $e) {
-            return 0;
-        } catch (\Exception $e) {
-            return 0;
         }
+
+        return 0;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getTrackers($offset = null, $limit = null)
+    public function findManyTrackers($offset = null, $limit = null)
     {
         $qb = $this->repository->createQueryBuilder('t');
 
@@ -119,25 +118,41 @@ class TrackerManager extends BaseTrackerManager
     /**
      * {@inheritdoc}
      */
-    public function saveTracker(TrackerInterface $tracker, $flush = false)
+    public function add(TrackerInterface $tracker, $save = false)
     {
         $this->em->persist($tracker);
 
-        if (true === $flush) {
-            $this->em->flush();
+        if (true === $save) {
+            $this->save();
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function deleteTracker(TrackerInterface $tracker, $flush = false)
+    public function delete(TrackerInterface $tracker, $save = false)
     {
         $this->em->remove($tracker);
 
-        if (true === $flush) {
-            $this->em->flush();
+        if (true === $save) {
+            $this->save();
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function save()
+    {
+        $this->em->flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        $this->em->clear($this->class);
     }
 
     /**
@@ -148,4 +163,3 @@ class TrackerManager extends BaseTrackerManager
         return $this->class;
     }
 }
- 

@@ -22,21 +22,21 @@
     <services>
 
         <!--Report entity manager-->
-        <service id="tadcka_reporter.manager.report.default" class="%tadcka_reporter.manager.report.default.class%" public="false">
+        <service id="tadcka_reporter.manager.report.default" class="%tadcka_reporter.manager.report.default.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument>%tadcka_reporter.model.report_class%</argument>
+            <argument>%tadcka_reporter.model.report.class%</argument>
         </service>
 
         <!--Status entity manager-->
-        <service id="tadcka_reporter.manager.status.default" class="%tadcka_reporter.manager.status.default.class%" public="false">
+        <service id="tadcka_reporter.manager.status.default" class="%tadcka_reporter.manager.status.default.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument>%tadcka_reporter.model.status_class%</argument>
+            <argument>%tadcka_reporter.model.status.class%</argument>
         </service>
 
         <!--Tracker entity manager-->
-        <service id="tadcka_reporter.manager.tracker.default" class="%tadcka_reporter.manager.tracker.default.class%" public="false">
+        <service id="tadcka_reporter.manager.tracker.default" class="%tadcka_reporter.manager.tracker.default.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument>%tadcka_reporter.model.tracker_class%</argument>
+            <argument>%tadcka_reporter.model.tracker.class%</argument>
         </service>
 
     </services>

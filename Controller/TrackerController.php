@@ -14,8 +14,13 @@ namespace Tadcka\ReporterBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\TranslatorInterface;
 use Tadcka\Component\Breadcrumbs\Breadcrumbs;
 use Tadcka\Component\Paginator\Pagination;
+use Tadcka\ReporterBundle\Form\Factory\TrackerFormFactory;
+use Tadcka\ReporterBundle\Form\Handler\TrackerFormHandler;
+use Tadcka\ReporterBundle\ModelManager\TrackerManagerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -25,7 +30,7 @@ use Tadcka\Component\Paginator\Pagination;
 class TrackerController extends ContainerAware
 {
     /**
-     * @return \Symfony\Component\Translation\TranslatorInterface
+     * @return TranslatorInterface
      */
     private function getTranslator()
     {
@@ -33,39 +38,47 @@ class TrackerController extends ContainerAware
     }
 
     /**
-     * @return \Tadcka\ReporterBundle\Form\Factory\TrackerFormFactory
+     * @return TrackerFormFactory
      */
-    private function getTrackerFormFactory()
+    private function getFormFactory()
     {
         return $this->container->get('tadcka_reporter.form_factory.tracker');
     }
 
     /**
-     * @return \Tadcka\ReporterBundle\Form\Handler\TrackerFormHandler
+     * @return TrackerFormHandler
      */
-    private function getTrackerFormHandler()
+    private function getFormHandler()
     {
         return $this->container->get('tadcka_reporter.form_handler.tracker');
     }
 
     /**
-     * @return \Tadcka\ReporterBundle\Provider\TrackerProviderInterface
+     * @return TrackerManagerInterface
      */
-    private function getTrackerProvider()
+    private function getManager()
     {
-        return $this->container->get('tadcka_reporter.tracker_provider');
+        return $this->container->get('tadcka_reporter.manager.tracker');
     }
 
+    /**
+     * Tracker list action.
+     *
+     * @param Request $request
+     * @param int $page
+     *
+     * @return Response
+     */
     public function indexAction(Request $request, $page = 1)
     {
         $page = $request->get('page', $page);
-        $count = $this->getTrackerProvider()->getCount();
+        $count = $this->getManager()->count();
         $pagination = new Pagination($count, $page, 30);
         if ($page !== $pagination->getCurrentPage()) {
             $pagination = new Pagination($count, 1, 30);
         }
 
-        $trackers = $this->getTrackerProvider()->getTrackers(
+        $trackers = $this->getManager()->findManyTrackers(
             $pagination->getOffset(),
             $pagination->getItemsPerPage()
         );
@@ -86,12 +99,21 @@ class TrackerController extends ContainerAware
         );
     }
 
+    /**
+     * Tracker add action.
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
+     */
     public function addAction(Request $request)
     {
-        $form = $this->getTrackerFormFactory()->create();
-        $formHandler = $this->getTrackerFormHandler();
+        $form = $this->getFormFactory()->create($this->getManager()->create());
+        $formHandler = $this->getFormHandler();
 
         if (true === $formHandler->process($request, $form)) {
+            $this->getManager()->save();
+
             $formHandler->onSuccess(
                 $this->getTranslator()->trans('tracker.add.success', array(), 'TadckaReporterBundle')
             );
@@ -118,18 +140,30 @@ class TrackerController extends ContainerAware
         );
     }
 
+    /**
+     * Tracker edit action.
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return RedirectResponse|Response
+     *
+     * @throws \LogicException
+     */
     public function editAction(Request $request, $id)
     {
-        $tracker = $this->getTrackerProvider()->getTracker($id);
+        $tracker = $this->getManager()->find($id);
 
         if (null === $tracker) {
             throw new \LogicException('Not fount tracker!');
         }
 
-        $form = $this->getTrackerFormFactory()->create($tracker);
-        $formHandler = $this->getTrackerFormHandler();
+        $form = $this->getFormFactory()->create($tracker);
+        $formHandler = $this->getFormHandler();
 
         if (true === $formHandler->process($request, $form)) {
+            $this->getManager()->save();
+
             $formHandler->onSuccess(
                 $this->getTranslator()->trans('tracker.edit.success', array(), 'TadckaReporterBundle')
             );
@@ -156,16 +190,26 @@ class TrackerController extends ContainerAware
         );
     }
 
+    /**
+     * Tracker delete action.
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return RedirectResponse|Response
+     *
+     * @throws \LogicException
+     */
     public function deleteAction(Request $request, $id)
     {
-        $tracker = $this->getTrackerProvider()->getTracker($id);
+        $tracker = $this->getManager()->find($id);
 
         if (null === $tracker) {
             throw new \LogicException('Not fount tracker!');
         }
 
         if (true === $request->isMethod('POST')) {
-            $this->getTrackerProvider()->deleteTracker($tracker);
+            $this->getManager()->delete($tracker, true);
             $this->container->get('session')->getFlashBag()->set(
                 'flash_notices',
                 array(

@@ -27,56 +27,66 @@ interface TrackerManagerInterface
      *
      * @return null|TrackerInterface
      */
-    public function findTracker($id);
+    public function find($id);
 
     /**
-     * Get tracker choices.
+     * Find tracker choices by locale.
      *
      * @param string $locale
      *
      * @return array
      */
-    public function getTrackerChoices($locale);
+    public function findTrackerChoicesByLocale($locale);
 
     /**
      * Get all tracker count.
      *
      * @return int
      */
-    public function getCount();
+    public function count();
 
     /**
-     * Get trackers.
+     * Find many trackers.
      *
      * @param null|int $offset
      * @param null|int $limit
      *
      * @return array|TrackerInterface[]
      */
-    public function getTrackers($offset = null, $limit = null);
+    public function findManyTrackers($offset = null, $limit = null);
 
     /**
      * Create tracker.
      *
      * @return TrackerInterface
      */
-    public function createTracker();
+    public function create();
 
     /**
-     * Save tracker.
+     * Add tracker.
      *
      * @param TrackerInterface $tracker
-     * @param bool $flush
+     * @param bool $save
      */
-    public function saveTracker(TrackerInterface $tracker, $flush = false);
+    public function add(TrackerInterface $tracker, $save = false);
 
     /**
      * Delete tracker.
      *
      * @param TrackerInterface $tracker
-     * @param bool $flush
+     * @param bool $save
      */
-    public function deleteTracker(TrackerInterface $tracker, $flush = false);
+    public function delete(TrackerInterface $tracker, $save = false);
+
+    /**
+     * Save persistent layer.
+     */
+    public function save();
+
+    /**
+     * Clear tracker objects from persistent layer.
+     */
+    public function clear();
 
     /**
      * Get tracker class name.

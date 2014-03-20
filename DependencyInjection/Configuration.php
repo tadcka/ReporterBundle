@@ -32,6 +32,9 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('db_driver')->cannotBeOverwritten()->isRequired()->end()
+                ->scalarNode('report_manager')->defaultValue('tadcka_reporter.manager.report.default')->cannotBeEmpty()->end()
+                ->scalarNode('status_manager')->defaultValue('tadcka_reporter.manager.status.default')->cannotBeEmpty()->end()
+                ->scalarNode('tracker_manager')->defaultValue('tadcka_reporter.manager.tracker.default')->cannotBeEmpty()->end()
                 ->arrayNode('class')->isRequired()
                     ->children()
                         ->arrayNode('model')->isRequired()

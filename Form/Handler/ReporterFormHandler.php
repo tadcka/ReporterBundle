@@ -60,7 +60,7 @@ class ReporterFormHandler
                     'user_info' => $request->getUserInfo(),
                 );
                 $report->setMetaInfo(json_encode($metaInfo));
-                $this->reportManager->saveReport($report, true);
+                $this->reportManager->add($report);
 
                 return true;
             }

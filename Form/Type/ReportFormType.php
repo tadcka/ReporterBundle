@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Tadcka\ReporterBundle\Provider\ProviderInterface;
 use Tadcka\ReporterBundle\Provider\StatusProviderInterface;
 use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
 
@@ -26,25 +27,18 @@ use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
 class ReportFormType extends AbstractType
 {
     /**
-     * @var TrackerProviderInterface
+     * @var ProviderInterface
      */
-    private $trackerProvider;
-
-    /**
-     * @var StatusProviderInterface
-     */
-    private $statusProvider;
+    private $provider;
 
     /**
      * Constructor.
      *
-     * @param TrackerProviderInterface $trackerProvider
-     * @param StatusProviderInterface $statusProvider
+     * @param ProviderInterface $provider
      */
-    public function __construct(TrackerProviderInterface $trackerProvider, StatusProviderInterface $statusProvider)
+    public function __construct(ProviderInterface $provider)
     {
-        $this->statusProvider = $statusProvider;
-        $this->trackerProvider = $trackerProvider;
+        $this->provider = $provider;
     }
 
     /**
@@ -54,21 +48,21 @@ class ReportFormType extends AbstractType
     {
         $builder->add(
             'tracker',
-            new TrackerChoiceFormType($this->trackerProvider),
+            new TrackerChoiceFormType($this->provider),
             array(
                 'label' => 'form.report.label.tracker',
                 'constraints' => array(new NotNull()),
-                'choices' => $this->trackerProvider->getChoices($options['locale'])
+                'choices' => $options['tracker_choices']
             )
         );
 
         $builder->add(
             'status',
-            new StatusChoiceFormType($this->statusProvider),
+            new StatusChoiceFormType($this->provider),
             array(
                 'label' => 'form.report.label.status',
                 'constraints' => array(new NotNull()),
-                'choices' => $this->statusProvider->getChoices($options['locale'])
+                'choices' => $options['status_choices']
             )
         );
 
@@ -87,7 +81,7 @@ class ReportFormType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setOptional(array('locale'));
+        $resolver->setOptional(array('tracker_choices', 'status_choices'));
 
         $resolver->setDefaults(
             array(

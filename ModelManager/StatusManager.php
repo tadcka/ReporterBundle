@@ -21,7 +21,7 @@ abstract class StatusManager implements StatusManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createStatus()
+    public function create()
     {
         $className = $this->getClass();
         $status = new $className;

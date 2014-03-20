@@ -58,7 +58,7 @@ class StatusFormHandler
         if (true === $request->isMethod('POST')) {
             $form->submit($request);
             if (true === $form->isValid()) {
-                $this->statusManager->saveStatus($form->getData(), true);
+                $this->statusManager->add($form->getData());
 
                 return true;
             }
