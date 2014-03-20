@@ -63,6 +63,7 @@ class ReporterController extends ContainerAware
         $formHandler = $this->getFormHandler();
 
         if (true === $formHandler->process($request, $form)) {
+
             $this->getManager()->save();
 
             return new Response($this->container->get('translator')->trans(

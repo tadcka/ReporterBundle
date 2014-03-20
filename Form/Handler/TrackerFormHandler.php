@@ -13,7 +13,6 @@ namespace Tadcka\ReporterBundle\Form\Handler;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Tadcka\ReporterBundle\ModelManager\TrackerManagerInterface;
 
 /**
@@ -29,20 +28,13 @@ class TrackerFormHandler
     private $trackerManager;
 
     /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    /**
      * Constructor.
      *
      * @param TrackerManagerInterface $trackerManager
-     * @param SessionInterface $session
      */
-    public function __construct(TrackerManagerInterface $trackerManager, SessionInterface $session)
+    public function __construct(TrackerManagerInterface $trackerManager)
     {
         $this->trackerManager = $trackerManager;
-        $this->session = $session;
     }
 
     /**
@@ -65,15 +57,5 @@ class TrackerFormHandler
         }
 
         return false;
-    }
-
-    /**
-     * On success.
-     *
-     * @param string $massage
-     */
-    public function onSuccess($massage)
-    {
-        $this->session->getFlashBag()->set('flash_notices', array('success' => array($massage)));
     }
 }

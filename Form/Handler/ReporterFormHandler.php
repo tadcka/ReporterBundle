@@ -68,10 +68,4 @@ class ReporterFormHandler
 
         return false;
     }
-
-    public function onSuccess()
-    {
-
-    }
 }
- 

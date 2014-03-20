@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="tadcka_reporter.provider.class">Tadcka\ReporterBundle\Provider\Provider</parameter>
+        <parameter key="tadcka_reporter.flash_message.class">Tadcka\ReporterBundle\Message\FlashMessage</parameter>
     </parameters>
 
     <services>
@@ -14,6 +15,11 @@
         <service id="tadcka_reporter.provider" class="%tadcka_reporter.provider.class%">
             <argument type="service" id="tadcka_reporter.manager.status" />
             <argument type="service" id="tadcka_reporter.manager.tracker" />
+        </service>
+
+        <service id="tadcka_reporter.flash_message" class="%tadcka_reporter.flash_message.class%">
+            <argument type="service" id="session" />
+            <argument type="service" id="translator" />
         </service>
 
     </services>

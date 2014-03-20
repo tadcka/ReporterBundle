@@ -38,3 +38,13 @@ public function registerBundles()
 }
 ```
 
+License
+-------
+
+This bundle is under the MIT license. See the complete license in the bundle:
+
+```
+    Code License:
+    [Resources/meta/LICENSE](https://github.com/tadcka/ReporterBundle/blob/master/Resources/meta/LICENSE)
+```
+

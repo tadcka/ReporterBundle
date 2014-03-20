@@ -20,6 +20,7 @@ use Tadcka\Component\Breadcrumbs\Breadcrumbs;
 use Tadcka\Component\Paginator\Pagination;
 use Tadcka\ReporterBundle\Form\Factory\TrackerFormFactory;
 use Tadcka\ReporterBundle\Form\Handler\TrackerFormHandler;
+use Tadcka\ReporterBundle\Message\FlashMessage;
 use Tadcka\ReporterBundle\ModelManager\TrackerManagerInterface;
 
 /**
@@ -59,6 +60,14 @@ class TrackerController extends ContainerAware
     private function getManager()
     {
         return $this->container->get('tadcka_reporter.manager.tracker');
+    }
+
+    /**
+     * @return FlashMessage
+     */
+    private function getFlashMessage()
+    {
+        return $this->container->get('tadcka_reporter.flash_message');
     }
 
     /**
@@ -109,14 +118,11 @@ class TrackerController extends ContainerAware
     public function addAction(Request $request)
     {
         $form = $this->getFormFactory()->create($this->getManager()->create());
-        $formHandler = $this->getFormHandler();
 
-        if (true === $formHandler->process($request, $form)) {
+        if (true === $this->getFormHandler()->process($request, $form)) {
+
             $this->getManager()->save();
-
-            $formHandler->onSuccess(
-                $this->getTranslator()->trans('tracker.add.success', array(), 'TadckaReporterBundle')
-            );
+            $this->getFlashMessage()->onSuccess('tracker.add.success');
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_trackers'));
         }
@@ -159,14 +165,11 @@ class TrackerController extends ContainerAware
         }
 
         $form = $this->getFormFactory()->create($tracker);
-        $formHandler = $this->getFormHandler();
 
-        if (true === $formHandler->process($request, $form)) {
+        if (true === $this->getFormHandler()->process($request, $form)) {
+
             $this->getManager()->save();
-
-            $formHandler->onSuccess(
-                $this->getTranslator()->trans('tracker.edit.success', array(), 'TadckaReporterBundle')
-            );
+            $this->getFlashMessage()->onSuccess('tracker.edit.success');
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_trackers'));
         }
@@ -209,15 +212,9 @@ class TrackerController extends ContainerAware
         }
 
         if (true === $request->isMethod('POST')) {
+
             $this->getManager()->delete($tracker, true);
-            $this->container->get('session')->getFlashBag()->set(
-                'flash_notices',
-                array(
-                    'success' => array(
-                        $this->getTranslator()->trans('tracker.delete.success', array(), 'TadckaReporterBundle')
-                    )
-                )
-            );
+            $this->getFlashMessage()->onSuccess('tracker.delete.success');
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_trackers'));
         }

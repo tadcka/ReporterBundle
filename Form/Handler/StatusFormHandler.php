@@ -13,7 +13,6 @@ namespace Tadcka\ReporterBundle\Form\Handler;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Tadcka\ReporterBundle\ModelManager\StatusManagerInterface;
 
 /**
@@ -29,20 +28,13 @@ class StatusFormHandler
     private $statusManager;
 
     /**
-     * @var SessionInterface
-     */
-    private $session;
-
-    /**
      * Constructor.
      *
      * @param StatusManagerInterface $statusManager
-     * @param SessionInterface $session
      */
-    public function __construct(StatusManagerInterface $statusManager, SessionInterface $session)
+    public function __construct(StatusManagerInterface $statusManager)
     {
         $this->statusManager = $statusManager;
-        $this->session = $session;
     }
 
     /**
@@ -65,15 +57,5 @@ class StatusFormHandler
         }
 
         return false;
-    }
-
-    /**
-     * On success.
-     *
-     * @param string $massage
-     */
-    public function onSuccess($massage)
-    {
-        $this->session->getFlashBag()->set('flash_notices', array('success' => array($massage)));
     }
 }

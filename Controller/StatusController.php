@@ -20,6 +20,7 @@ use Tadcka\Component\Breadcrumbs\Breadcrumbs;
 use Tadcka\Component\Paginator\Pagination;
 use Tadcka\ReporterBundle\Form\Factory\StatusFormFactory;
 use Tadcka\ReporterBundle\Form\Handler\StatusFormHandler;
+use Tadcka\ReporterBundle\Message\FlashMessage;
 use Tadcka\ReporterBundle\ModelManager\StatusManagerInterface;
 
 /**
@@ -59,6 +60,14 @@ class StatusController extends ContainerAware
     private function getManager()
     {
         return $this->container->get('tadcka_reporter.manager.status');
+    }
+
+    /**
+     * @return FlashMessage
+     */
+    private function getFlashMessage()
+    {
+        return $this->container->get('tadcka_reporter.flash_message');
     }
 
     /**
@@ -109,14 +118,11 @@ class StatusController extends ContainerAware
     public function addAction(Request $request)
     {
         $form = $this->getFormFactory()->create($this->getManager()->create());
-        $formHandler = $this->getFormHandler();
 
-        if (true === $formHandler->process($request, $form)) {
+        if (true === $this->getFormHandler()->process($request, $form)) {
+
             $this->getManager()->save();
-
-            $formHandler->onSuccess(
-                $this->getTranslator()->trans('status.add.success', array(), 'TadckaReporterBundle')
-            );
+            $this->getFlashMessage()->onSuccess('status.add.success');
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_statuses'));
         }
@@ -159,14 +165,11 @@ class StatusController extends ContainerAware
         }
 
         $form = $this->getFormFactory()->create($status);
-        $formHandler = $this->getFormHandler();
 
-        if (true === $formHandler->process($request, $form)) {
+        if (true === $this->getFormHandler()->process($request, $form)) {
+
             $this->getManager()->save();
-
-            $formHandler->onSuccess(
-                $this->getTranslator()->trans('status.edit.success', array(), 'TadckaReporterBundle')
-            );
+            $this->getFlashMessage()->onSuccess('status.edit.success');
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_statuses'));
         }
@@ -209,15 +212,9 @@ class StatusController extends ContainerAware
         }
 
         if (true === $request->isMethod('POST')) {
+
             $this->getManager()->delete($status, true);
-            $this->container->get('session')->getFlashBag()->set(
-                'flash_notices',
-                array(
-                    'success' => array(
-                        $this->getTranslator()->trans('status.delete.success', array(), 'TadckaReporterBundle')
-                    )
-                )
-            );
+            $this->getFlashMessage()->onSuccess('status.delete.success');
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_statuses'));
         }

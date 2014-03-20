@@ -20,6 +20,7 @@ use Tadcka\Component\Breadcrumbs\Breadcrumbs;
 use Tadcka\Component\Paginator\Pagination;
 use Tadcka\ReporterBundle\Form\Factory\ReportFormFactory;
 use Tadcka\ReporterBundle\Form\Handler\ReportFormHandler;
+use Tadcka\ReporterBundle\Message\FlashMessage;
 use Tadcka\ReporterBundle\ModelManager\ReportManagerInterface;
 
 /**
@@ -59,6 +60,14 @@ class ReportController extends ContainerAware
     private function getManager()
     {
         return $this->container->get('tadcka_reporter.manager.report');
+    }
+
+    /**
+     * @return FlashMessage
+     */
+    private function getFlashMessage()
+    {
+        return $this->container->get('tadcka_reporter.flash_message');
     }
 
     /**
@@ -116,15 +125,13 @@ class ReportController extends ContainerAware
         if (null === $report) {
             throw new \LogicException('Not fount report!');
         }
+
         $form = $this->getFormFactory()->create($request->getLocale(), $report);
-        $formHandler = $this->getFormHandler();
 
-        if (true === $formHandler->process($request, $form)) {
+        if (true === $this->getFormHandler()->process($request, $form)) {
+
             $this->getManager()->save();
-
-            $formHandler->onSuccess(
-                $this->getTranslator()->trans('report.update.success', array(), 'TadckaReporterBundle')
-            );
+            $this->getFlashMessage()->onSuccess('report.update.success');
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_reports'));
         }
@@ -169,15 +176,9 @@ class ReportController extends ContainerAware
         }
 
         if (true === $request->isMethod('POST')) {
+
             $this->getManager()->delete($report, true);
-            $this->container->get('session')->getFlashBag()->set(
-                'flash_notices',
-                array(
-                    'success' => array(
-                        $this->getTranslator()->trans('report.delete.success', array(), 'TadckaReporterBundle')
-                    )
-                )
-            );
+            $this->getFlashMessage()->onSuccess('report.delete.success');
 
             return new RedirectResponse($this->container->get('router')->generate('tadcka_reporter_reports'));
         }
