@@ -23,7 +23,6 @@
         <!--Tracker form handler-->
         <service id="tadcka_reporter.form_handler.tracker" class="%tadcka_reporter.form_handler.tracker.class%">
             <argument type="service" id="tadcka_reporter.manager.tracker" />
-            <argument type="service" id="session" />
         </service>
 
     </services>

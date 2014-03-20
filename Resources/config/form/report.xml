@@ -23,7 +23,6 @@
         <!--Report form handler-->
         <service id="tadcka_reporter.form_handler.report" class="%tadcka_reporter.form_handler.report.class%">
             <argument type="service" id="tadcka_reporter.manager.report" />
-            <argument type="service" id="session" />
         </service>
 
     </services>
