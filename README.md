@@ -1,6 +1,8 @@
 ReporterBundle
 ==============
 
+![Reporter example](https://github.com/tadcka/ReporterBundle/blob/master/Resources/public/images/reporter.png?raw=true)
+
 ## Installation
 
 ### Step 1: Download TadckaReporterBundle using composer
