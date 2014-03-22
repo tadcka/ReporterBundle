@@ -19,7 +19,7 @@ use Symfony\Component\Translation\TranslatorInterface;
  *
  * @since 3/20/14 10:49 PM
  */
-class FlashMessage
+class FlashMessage implements FlashMessageInterface
 {
     /**
      * @var Session
@@ -44,11 +44,7 @@ class FlashMessage
     }
 
     /**
-     * On success message.
-     *
-     * @param string $id
-     * @param array $parameters
-     * @param string $domain
+     * {@inheritdoc}
      */
     public function onSuccess($id, array $parameters = array(), $domain = 'TadckaReporterBundle')
     {

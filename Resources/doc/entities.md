@@ -6,7 +6,7 @@ Entities
 /**
  * Class Report
  *
- * @package Tadcka\SandboxBundle\Entity
+ * @package Tadcka\AcmeBundle\Entity
  *
  * @ORM\Entity
  * @ORM\Table(name="tadcka_report")
@@ -16,7 +16,7 @@ class Report extends BaseReport
     /**
      * @var TrackerInterface
      *
-     * @ORM\ManyToOne(targetEntity="Tadcka\SandboxBundle\Entity\Tracker")
+     * @ORM\ManyToOne(targetEntity="Tadcka\AcmeBundle\Entity\Tracker")
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="tracker_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -26,7 +26,7 @@ class Report extends BaseReport
     /**
      * @var StatusInterface
      *
-     * @ORM\ManyToOne(targetEntity="Tadcka\SandboxBundle\Entity\Status")
+     * @ORM\ManyToOne(targetEntity="Tadcka\AcmeBundle\Entity\Status")
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="status_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      * })
@@ -39,7 +39,7 @@ class Report extends BaseReport
 /**
  * Class Status
  *
- * @package Tadcka\SandboxBundle\Entity
+ * @package Tadcka\AcmeBundle\Entity
  *
  * @ORM\Entity
  * @ORM\Table(name="tadcka_status")
@@ -49,7 +49,7 @@ class Status extends BaseStatus
     /**
      * @var StatusTranslationInterface[]
      *
-     * @ORM\OneToMany(targetEntity="Tadcka\SandboxBundle\Entity\StatusTranslation", mappedBy="status", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Tadcka\AcmeBundle\Entity\StatusTranslation", mappedBy="status", cascade={"persist", "remove"})
      */
     protected $translations;
 
@@ -85,7 +85,7 @@ class Status extends BaseStatus
 /**
  * Class StatusTranslation
  *
- * @package Tadcka\SandboxBundle\Entity
+ * @package Tadcka\AcmeBundle\Entity
  *
  * @ORM\Entity
  * @ORM\Table(
@@ -98,7 +98,7 @@ class Status extends BaseStatus
 class StatusTranslation extends BaseStatusTranslation
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Tadcka\SandboxBundle\Entity\Status", inversedBy="translations")
+     * @ORM\ManyToOne(targetEntity="Tadcka\AcmeBundle\Entity\Status", inversedBy="translations")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     protected $status;
@@ -109,7 +109,7 @@ class StatusTranslation extends BaseStatusTranslation
 /**
  * Class Tracker
  *
- * @package Tadcka\SandboxBundle\Entity
+ * @package Tadcka\AcmeBundle\Entity
  *
  * @ORM\Entity
  * @ORM\Table(name="tadcka_tracker")
@@ -119,7 +119,7 @@ class Tracker extends BaseTracker
     /**
      * @var TrackerTranslationInterface[]
      *
-     * @ORM\OneToMany(targetEntity="Tadcka\SandboxBundle\Entity\TrackerTranslation", mappedBy="tracker", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Tadcka\AcmeBundle\Entity\TrackerTranslation", mappedBy="tracker", cascade={"persist", "remove"})
      */
     protected $translations;
 
@@ -155,7 +155,7 @@ class Tracker extends BaseTracker
 /**
  * Class TrackerTranslation
  *
- * @package Tadcka\SandboxBundle\Entity
+ * @package Tadcka\AcmeBundle\Entity
  *
  * @ORM\Entity
  * @ORM\Table(
@@ -168,7 +168,7 @@ class Tracker extends BaseTracker
 class TrackerTranslation extends BaseTrackerTranslation
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Tadcka\SandboxBundle\Entity\Tracker", inversedBy="translations")
+     * @ORM\ManyToOne(targetEntity="Tadcka\AcmeBundle\Entity\Tracker", inversedBy="translations")
      * @ORM\JoinColumn(name="tracker_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
      */
     protected $tracker;
