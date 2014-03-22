@@ -3,6 +3,7 @@ Entities
 
 ## Report
 
+``` php
 /**
  * Class Report
  *
@@ -33,9 +34,11 @@ class Report extends BaseReport
      */
     protected $status;
 }
+```
 
 ## Status
 
+``` php
 /**
  * Class Status
  *
@@ -79,9 +82,11 @@ class Status extends BaseStatus
         $this->translations->removeElement($translation);
     }
 }
+```
 
 ## StatusTranslation
 
+``` php
 /**
  * Class StatusTranslation
  *
@@ -103,9 +108,11 @@ class StatusTranslation extends BaseStatusTranslation
      */
     protected $status;
 }
+```
 
 ## Tracker
 
+``` php
 /**
  * Class Tracker
  *
@@ -149,9 +156,11 @@ class Tracker extends BaseTracker
         $this->translations->removeElement($translation);
     }
 }
+```
 
 ## TrackerTranslation
 
+``` php
 /**
  * Class TrackerTranslation
  *
@@ -173,3 +182,4 @@ class TrackerTranslation extends BaseTrackerTranslation
      */
     protected $tracker;
 }
+```
