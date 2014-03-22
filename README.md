@@ -33,7 +33,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new Tadcka\AddressBundle\TadckaReporterBundle(),
+        new Tadcka\TextBundle\TadckaReporterBundle(),
     );
 }
 ```
