@@ -14,7 +14,6 @@ namespace Tadcka\ReporterBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Tadcka\ReporterBundle\Model\StatusInterface;
 use Tadcka\ReporterBundle\Provider\ProviderInterface;
-use Tadcka\ReporterBundle\Provider\StatusProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>

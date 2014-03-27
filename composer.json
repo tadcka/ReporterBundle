@@ -14,7 +14,14 @@
 	"minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony" : ">=2.3"
+        "symfony/framework-bundle" : ">=2.3",
+
+        "tadcka/breadcrumbs": "~1.0",
+        "tadcka/paginator-bundle": "~0.1",
+        "nercury/translation-editor-bundle": "0.1.x-dev"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "*"
     },
     "autoload": {
         "psr-4": {
