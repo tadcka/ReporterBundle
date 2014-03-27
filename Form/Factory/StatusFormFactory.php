@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Tadcka\ReporterBundle\Form\Type\StatusFormType;
 use Tadcka\ReporterBundle\Model\StatusInterface;
-use Tadcka\ReporterBundle\ModelManager\StatusManagerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>

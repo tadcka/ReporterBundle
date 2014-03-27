@@ -16,8 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Tadcka\ReporterBundle\Provider\ProviderInterface;
-use Tadcka\ReporterBundle\Provider\StatusProviderInterface;
-use Tadcka\ReporterBundle\Provider\TrackerProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>

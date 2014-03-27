@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Tadcka\ReporterBundle\Form\Type\TrackerFormType;
 use Tadcka\ReporterBundle\Model\TrackerInterface;
-use Tadcka\ReporterBundle\ModelManager\TrackerManagerInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
